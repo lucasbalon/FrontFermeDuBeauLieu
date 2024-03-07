@@ -1,37 +1,37 @@
 
 <div class="mat-elevation-z8">
   <mat-form-field>
-    <input type="number" matInput (keyup)="applyFilter($event)" placeholder="Search for a loopNumber">
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search for a loopNumber">
   </mat-form-field>
   <mat-table [dataSource]="dataSource">
 
     <!-- LoopNumber Column -->
     <ng-container matColumnDef="loopNumber">
-      <mat-header-cell *matHeaderCellDef> LoopNumber </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Numéro de boucle </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.loopNumber}} </mat-cell>
     </ng-container>
 
     <!-- Gender Column -->
     <ng-container matColumnDef="gender">
-      <mat-header-cell *matHeaderCellDef> Gender </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Sexe </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.gender ? 'Male' : 'Female'}} </mat-cell>
     </ng-container>
 
     <!-- Coat Column -->
     <ng-container matColumnDef="coat">
-      <mat-header-cell *matHeaderCellDef> Coat </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Robe </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.coat}} </mat-cell>
     </ng-container>
 
     <!-- BirthDate Column -->
     <ng-container matColumnDef="birthDate">
-      <mat-header-cell *matHeaderCellDef> BirthDate </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Naissance </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.birthDate | date}} </mat-cell>
     </ng-container>
 
     <!-- Pasture Column -->
     <ng-container matColumnDef="pasture">
-      <mat-header-cell *matHeaderCellDef> Pasture </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Pature </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.pasture}} </mat-cell>
     </ng-container>
 

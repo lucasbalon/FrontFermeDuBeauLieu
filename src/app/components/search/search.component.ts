@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Bovine} from "../../models/Bovine";
+import {map} from "rxjs";
 
 @Component({
   selector: 'app-search',
@@ -11,6 +12,7 @@ export class SearchComponent {
 
   displayedColumns: string[] = ['loopNumber', 'gender', 'coat', 'birthDate', 'pasture'];
   dataSource: MatTableDataSource<Bovine>;
+  noData: any;
 
   // Usually, we would also inject a service that fetches the bovines from a server
   constructor() {
@@ -34,8 +36,13 @@ export class SearchComponent {
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(BOVINES);
+
+    this.noData = this.dataSource.connect().pipe(map(data => data.length === 0));
   }
 
+
+
+  //todo: utiliser le service ici
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
