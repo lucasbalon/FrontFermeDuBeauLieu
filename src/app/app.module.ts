@@ -16,7 +16,15 @@ import {authInterceptor} from "./interceptors/auth.interceptor";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
-import {MatCell, MatColumnDef, MatHeaderCell, MatHeaderRow, MatRow, MatTable} from "@angular/material/table";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -44,7 +52,11 @@ import {MatCell, MatColumnDef, MatHeaderCell, MatHeaderRow, MatRow, MatTable} fr
     MatCell,
     MatHeaderRow,
     MatRow,
-    MatColumnDef
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRowDef,
+    MatRowDef
   ],
   providers: [
     { provide : "urlBackEnd", useValue : "http://localhost:8080"},
