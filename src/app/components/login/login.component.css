@@ -1,0 +1,28 @@
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.centered-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-form mat-form-field {
+  width: 100%;  /* à ajuster selon les besoins */
+}
+
+.elevated-form {
+  border: 1px solid white;  /* couleur de la bordure, à ajuster selon le besoin */
+  border-radius: 15px;  /* rayon de la bordure arrondie, à ajuster selon le besoin */
+  box-shadow: 0 0 10px 5px rgba(0,0,0,0.1);  /* ombre portée, à ajuster selon le besoin */
+  padding: 20px;  /* espace à l'intérieur de la div, à ajuster selon le besoin */
+  width: 300px;  /* largeur du formulaire, à ajuster selon le besoin */
+  margin: 0 auto;  /* centrage horizontal */
+  background-color: #fff;  /* couleur d'arrière-plan, à ajuster selon le besoin */
+}
