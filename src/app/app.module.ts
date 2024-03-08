@@ -25,6 +25,8 @@ import {
   MatRow, MatRowDef,
   MatTable
 } from "@angular/material/table";
+import {MatToolbar} from "@angular/material/toolbar";
+import {MatIcon} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import {
     MatHeaderCellDef,
     MatCellDef,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
+    MatToolbar,
+    MatIcon
   ],
   providers: [
     { provide : "urlBackEnd", useValue : "http://localhost:8080"},
