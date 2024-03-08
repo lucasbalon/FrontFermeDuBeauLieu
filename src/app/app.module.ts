@@ -27,6 +27,12 @@ import {
 } from "@angular/material/table";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
+import { PasturesComponent } from './components/pastures/pastures.component';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import { BirthComponent } from './components/birth/birth.component';
+import { ScanComponent } from './components/scan/scan.component';
+import { InjectionComponent } from './components/injection/injection.component';
+import { BovinComponent } from './components/bovin/bovin.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +43,12 @@ import {MatIcon} from "@angular/material/icon";
     NotFoundComponent,
     LoginComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    PasturesComponent,
+    BirthComponent,
+    ScanComponent,
+    InjectionComponent,
+    BovinComponent
   ],
   imports: [
     //Angular Material
@@ -60,7 +71,10 @@ import {MatIcon} from "@angular/material/icon";
     MatHeaderRowDef,
     MatRowDef,
     MatToolbar,
-    MatIcon
+    MatIcon,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem
   ],
   providers: [
     { provide : "urlBackEnd", useValue : "http://localhost:8080"},

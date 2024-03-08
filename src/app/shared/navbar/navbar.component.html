@@ -1,8 +1,14 @@
 <mat-toolbar color="primary">
-  <a mat-button routerLink="/">Accueil</a>
-  <a mat-button routerLink="/about-us">À propos de nous</a>
+  <a mat-button routerLink="/search">Recherche</a>
+  <a mat-button routerLink="/pastures">Patures</a>
+  <button mat-button [matMenuTriggerFor]="encodeMenu">Encoder</button>
+  <mat-menu #encodeMenu="matMenu">
+    <button mat-menu-item routerLink="/birth">Naissance</button>
+    <button mat-menu-item routerLink="/scan">Échographie</button>
+    <button mat-menu-item routerLink="/injection">Injection</button>
+  </mat-menu>
   <span class="spacer"></span>
-  <button mat-icon-button>
+  <button mat-icon-button (click)="_authService.logout()">
     <mat-icon class="logout-icon">exit_to_app</mat-icon>
   </button>
 </mat-toolbar>
