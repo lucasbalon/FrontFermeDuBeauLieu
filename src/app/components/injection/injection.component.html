@@ -1,1 +1,27 @@
-<p>injection works!</p>
+<form [formGroup]="injectionForm" class="parent" (ngSubmit)="onSubmit()">
+
+  <button class="product-button" mat-raised-button color="primary" type="button" (click)="addProduct()">Add Product</button>
+
+  <mat-form-field class="example-full-width full-width-input">
+    <mat-select placeholder="Product" formControlName="product">
+      <mat-option *ngFor="let product of products" [value]="product">{{product}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width full-width-input">
+    <input matInput [matDatepicker]="dp1" placeholder="Injection Date" formControlName="injectionDate">
+    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+    <mat-datepicker #dp1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width full-width-input">
+    <input type="text" placeholder="Cow Loop Number" matInput formControlName="cowLoopNumber" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+      <mat-option *ngFor="let loopNumber of filteredCowLoopNumbers | async" [value]="loopNumber">
+        {{ loopNumber }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

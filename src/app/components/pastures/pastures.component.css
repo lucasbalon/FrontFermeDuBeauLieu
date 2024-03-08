@@ -1,0 +1,35 @@
+/* styles.css */
+.lg-screen {
+  display: none;
+}
+
+.sm-screen {
+  display: block;
+}
+
+@media only screen and (min-width: 1000px) {
+  .lg-screen {
+    display: block;
+  }
+  .sm-screen {
+    display: none;
+  }
+}
+
+/* rest of your styles */
+.example-card {
+  width: 20rem;
+  height: 20rem;
+  margin: auto;
+}
+
+mat-grid-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

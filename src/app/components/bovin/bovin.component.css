@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  height: 70vh;
+  margin: 2rem;
+}
+h3 {
+  font-weight: bold;
+  margin: 0;
+}
+.lists {
+  width: 50%;
+  height: 100%;
+}
+.list-card {
+  height: 33%;
+}
+.info {
+  width: 50%;
+  height: 100%;
+}
+
+.info-card, .list-card {
+  padding: 2rem;
+  margin: 2rem;
+}
+
+.list-content {
+  overflow: auto;
+}
+.margin {
+  margin-left: 1rem;
+}
+@media(max-width: 1000px) {
+  .container {
+    flex-direction: column;
+    margin: 2rem 0 0 0;
+  }
+  .lists, .info {
+    width: 100%;
+    height: auto;
+  }
+  .info-card, .list-card {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}

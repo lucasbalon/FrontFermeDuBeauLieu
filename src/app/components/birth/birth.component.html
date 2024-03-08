@@ -1,1 +1,33 @@
-<p>birth works!</p>
+<div>
+  <form [formGroup]="cowBirthForm" (ngSubmit)="onSubmit()" class="parent">
+    <mat-form-field class="full-width-input">
+      <input matInput placeholder="Loop Number" formControlName="loopNumber">
+    </mat-form-field>
+
+    <mat-form-field class="full-width-input">
+      <input matInput placeholder="Coat" formControlName="coat">
+    </mat-form-field>
+
+    <mat-checkbox formControlName="gender">Genre (cocher si male)</mat-checkbox>
+
+    <mat-form-field class="full-width-input">
+      <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="cesarean">Césarienne (cocher si oui)</mat-checkbox>
+
+    <mat-form-field class="full-width-input">
+      <input type="text" placeholder="Mother Loop Number" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+    </mat-form-field>
+
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
+        {{ loopNumber }}
+      </mat-option>
+    </mat-autocomplete>
+
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+</div>

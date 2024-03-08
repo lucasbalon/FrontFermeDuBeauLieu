@@ -1,0 +1,43 @@
+<div class="flex-container">
+  <div class="example-container">
+    <h2>Bovins</h2>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Rechercher" (input)="onSearchChange($event, 'todo')">
+    </mat-form-field>
+
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="filteredTodo"
+      [cdkDropListConnectedTo]="[doneList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      @for (item of todo; track item) {
+        <div class="example-box" cdkDrag>{{item}}</div>
+      }
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2>Pature 1</h2>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Rechercher" (input)="onSearchChange($event, 'done')">
+    </mat-form-field>
+
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="filteredDone"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      @for (item of done; track item) {
+        <div class="example-box" cdkDrag>{{item}}</div>
+      }
+    </div>
+  </div>
+
+
+</div>

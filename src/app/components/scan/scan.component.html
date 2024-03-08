@@ -1,1 +1,20 @@
-<p>scan works!</p>
+<form [formGroup]="ultrasoundForm" class="parent" (ngSubmit)="onSubmit()">
+  <mat-form-field class="example-full-width full-width-input">
+    <input matInput [matDatepicker]="dp1" placeholder="Scan Date" formControlName="scanDate">
+    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+    <mat-datepicker #dp1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width full-width-input">
+    <input type="text" placeholder="Mother Loop Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+      <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
+        {{ loopNumber }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="isPregnant">Pregnant (check if yes)</mat-checkbox>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

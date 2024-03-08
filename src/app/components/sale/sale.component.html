@@ -1,0 +1,25 @@
+<form [formGroup]="saleForm" (ngSubmit)="onSubmit()" class="parent">
+  <mat-form-field class="full-width-input">
+    <input matInput placeholder="Sale Date" formControlName="saleDate" type="date">
+  </mat-form-field>
+
+  <mat-form-field class="full-width-input">
+    <input matInput placeholder="Amount" formControlName="amount" type="number" min="0">
+  </mat-form-field>
+
+  <mat-form-field class="full-width-input">
+    <input matInput placeholder="Carrier Number" formControlName="carrierNumber" type="number" min="0">
+  </mat-form-field>
+
+  <mat-form-field class="full-width-input">
+    <input matInput placeholder="Customer Number" formControlName="customerNumber" type="number" min="0">
+  </mat-form-field>
+
+  <mat-form-field class="full-width-input">
+    <input matInput placeholder="Loop Number" formControlName="loopNumber" required>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit" [disabled]="!saleForm.valid">
+    Submit
+  </button>
+</form>

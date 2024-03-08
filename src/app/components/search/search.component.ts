@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Bovine} from "../../models/Bovine";
 import {map} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -15,7 +16,7 @@ export class SearchComponent {
   noData: any;
 
   // Usually, we would also inject a service that fetches the bovines from a server
-  constructor() {
+  constructor(private readonly _router: Router) {
     // For the example, we are using some dummy bovines
     const BOVINES: Bovine[] = [
       {
@@ -46,6 +47,10 @@ export class SearchComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  viewDetails(row: Bovine) {
+    this._router.navigate(['/bovin']);
   }
 
 }

@@ -33,6 +33,18 @@ import { BirthComponent } from './components/birth/birth.component';
 import { ScanComponent } from './components/scan/scan.component';
 import { InjectionComponent } from './components/injection/injection.component';
 import { BovinComponent } from './components/bovin/bovin.component';
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {MatCard, MatCardContent, MatCardHeader, MatCardModule} from "@angular/material/card";
+import { PastureComponent } from './components/pasture/pasture.component';
+import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatNativeDateModule, MatOption} from "@angular/material/core";
+import {MatSelect} from "@angular/material/select";
+import {MatAutocomplete, MatAutocompleteModule} from "@angular/material/autocomplete";
+import { AddProductComponent } from './components/add-product/add-product.component';
+import {MatExpansionModule, MatExpansionPanel, MatExpansionPanelTitle} from "@angular/material/expansion";
+import { SaleComponent } from './components/sale/sale.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +60,10 @@ import { BovinComponent } from './components/bovin/bovin.component';
     BirthComponent,
     ScanComponent,
     InjectionComponent,
-    BovinComponent
+    BovinComponent,
+    PastureComponent,
+    AddProductComponent,
+    SaleComponent
   ],
   imports: [
     //Angular Material
@@ -74,7 +89,27 @@ import { BovinComponent } from './components/bovin/bovin.component';
     MatIcon,
     MatMenuTrigger,
     MatMenu,
-    MatMenuItem
+    MatMenuItem,
+    MatGridList,
+    MatGridTile,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardModule,
+    CdkDropList,
+    CdkDrag,
+    MatCheckbox,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatNativeDateModule,
+    MatSelect,
+    MatOption,
+    MatAutocomplete,
+    MatAutocompleteModule,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionModule
   ],
   providers: [
     { provide : "urlBackEnd", useValue : "http://localhost:8080"},
