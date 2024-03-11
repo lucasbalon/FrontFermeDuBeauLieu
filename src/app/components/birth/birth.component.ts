@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
+import {map, Observable, of, startWith, switchMap} from "rxjs";
 import {BovineService} from "../../services/bovine.service";
 import {BirthForm} from "../../models/Bovine";
 
@@ -12,10 +12,11 @@ import {BirthForm} from "../../models/Bovine";
 export class BirthComponent {
 
   cowBirthForm: FormGroup;
-  motherLoopNumbers = ['1', '2', 'Number 3'];
+  motherLoopNumbers: string[] = [];
   filteredMotherLoopNumbers: undefined | Observable<Array<string>>;
 
   constructor(private formBuilder: FormBuilder, private bovineService: BovineService) {
+
     this.cowBirthForm = this.formBuilder.group({
       loopNumber: ['', Validators.required],
       coat: ['', Validators.required],
@@ -24,14 +25,16 @@ export class BirthComponent {
       cesarean: ['', Validators.required],
       motherLoopNumber: ['', Validators.required]
     });
-    this.filteredMotherLoopNumbers = this.cowBirthForm.get('motherLoopNumber')?.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
+    this.filteredMotherLoopNumbers = this.bovineService.loopNumbers().pipe(
+      switchMap(numbers => {
+        this.motherLoopNumbers = numbers;
+        return this.cowBirthForm.get('motherLoopNumber')?.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        ) ?? of([]);
+      })
+    );
   }
-
-  ngOnInit(): void {}
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();

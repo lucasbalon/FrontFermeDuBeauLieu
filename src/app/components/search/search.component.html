@@ -1,38 +1,37 @@
-<!--
 
 <div class="mat-elevation-z8">
   <mat-form-field class="width_large">
     <input matInput (keyup)="applyFilter($event)" placeholder="Recherche par numéro de Travail">
   </mat-form-field>
-  <mat-table [dataSource]="dataSource">
+  <mat-table [dataSource]="dataSource" matSort>
 
-    &lt;!&ndash; LoopNumber Column &ndash;&gt;
+    <!-- LoopNumber Column -->
     <ng-container matColumnDef="loopNumber">
-      <mat-header-cell *matHeaderCellDef> Numéro de boucle </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Numéro de boucle </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.loopNumber}} </mat-cell>
     </ng-container>
 
-    &lt;!&ndash; Gender Column &ndash;&gt;
+    <!-- Gender Column -->
     <ng-container matColumnDef="gender">
-      <mat-header-cell *matHeaderCellDef> Sexe </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Sexe </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.gender ? 'Male' : 'Female'}} </mat-cell>
     </ng-container>
 
-    &lt;!&ndash; Coat Column &ndash;&gt;
+    <!-- Coat Column -->
     <ng-container matColumnDef="coat">
-      <mat-header-cell *matHeaderCellDef> Robe </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Robe </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.coat}} </mat-cell>
     </ng-container>
 
-    &lt;!&ndash; BirthDate Column &ndash;&gt;
+    <!-- BirthDate Column -->
     <ng-container matColumnDef="birthDate">
-      <mat-header-cell *matHeaderCellDef> Naissance </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Naissance </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.birthDate | date}} </mat-cell>
     </ng-container>
 
-    &lt;!&ndash; Pasture Column &ndash;&gt;
+    <!-- Pasture Column -->
     <ng-container matColumnDef="pasture">
-      <mat-header-cell *matHeaderCellDef> Pature </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Pature </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.pasture}} </mat-cell>
     </ng-container>
 
@@ -40,4 +39,3 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewDetails(row)"></mat-row>
   </mat-table>
 </div>
--->

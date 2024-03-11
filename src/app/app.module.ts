@@ -23,7 +23,7 @@ import {
   MatHeaderCellDef,
   MatHeaderRow, MatHeaderRowDef,
   MatRow, MatRowDef,
-  MatTable
+  MatTable, MatTableModule
 } from "@angular/material/table";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
@@ -46,6 +46,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import {MatExpansionModule, MatExpansionPanel, MatExpansionPanelTitle} from "@angular/material/expansion";
 import { SaleComponent } from './components/sale/sale.component';
 import {ErrorCatchingInterceptor} from "./interceptors/error-catching.interceptor";
+import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -110,7 +111,12 @@ import {ErrorCatchingInterceptor} from "./interceptors/error-catching.intercepto
     MatAutocompleteModule,
     MatExpansionPanel,
     MatExpansionPanelTitle,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSortHeader,
+    MatSort,
+    MatSortModule,
+    MatTableModule
+
   ],
   providers: [
     { provide : "urlBackEnd", useValue : "http://localhost:8080"},
