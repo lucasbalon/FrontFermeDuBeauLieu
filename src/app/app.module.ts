@@ -45,6 +45,7 @@ import {MatAutocomplete, MatAutocompleteModule} from "@angular/material/autocomp
 import { AddProductComponent } from './components/add-product/add-product.component';
 import {MatExpansionModule, MatExpansionPanel, MatExpansionPanelTitle} from "@angular/material/expansion";
 import { SaleComponent } from './components/sale/sale.component';
+import {ErrorCatchingInterceptor} from "./interceptors/error-catching.interceptor";
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { SaleComponent } from './components/sale/sale.component';
   providers: [
     { provide : "urlBackEnd", useValue : "http://localhost:8080"},
     {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

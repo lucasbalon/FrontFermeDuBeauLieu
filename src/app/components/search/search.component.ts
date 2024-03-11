@@ -1,6 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Bovine} from "../../models/Bovine";
+//import {Bovine} from "../../models/Bovine";
 import {map} from "rxjs";
 import {Router} from "@angular/router";
 
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class SearchComponent {
 
-  displayedColumns: string[] = ['loopNumber', 'gender', 'coat', 'birthDate', 'pasture'];
+  /*displayedColumns: string[] = ['loopNumber', 'gender', 'coat', 'birthDate', 'pasture'];
   dataSource: MatTableDataSource<Bovine>;
   noData: any;
 
@@ -51,6 +51,6 @@ export class SearchComponent {
 
   viewDetails(row: Bovine) {
     this._router.navigate(['/bovin']);
-  }
+  }*/
 
 }

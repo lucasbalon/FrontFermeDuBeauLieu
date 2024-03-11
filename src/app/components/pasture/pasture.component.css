@@ -5,18 +5,18 @@
 .flex-container {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 3rem;
 }
 
 .example-container {
   width: 50%;
-  max-width: 100%;
   margin: 1rem;
   display: inline-block;
   vertical-align: top;
 }
 
 .example-list {
-  max-height: 73vh;
+  max-height: 58vh;
   overflow: auto;
   border: solid 1px #ccc;
   min-height: 60px;
@@ -61,4 +61,8 @@
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+form > * {
+  padding: 1rem;
 }

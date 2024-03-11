@@ -1,7 +1,8 @@
 .container {
   display: flex;
-  height: 70vh;
+  height: 110vh;
   margin: 2rem;
+  padding-bottom: 5rem;
 }
 h3 {
   font-weight: bold;
@@ -12,7 +13,7 @@ h3 {
   height: 100%;
 }
 .list-card {
-  height: 33%;
+  height: 30%;
 }
 .info {
   width: 50%;

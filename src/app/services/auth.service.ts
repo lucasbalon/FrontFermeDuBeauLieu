@@ -10,9 +10,8 @@ import {Auth} from "../models/Auth";
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-
-  private authStatusListener = new Subject<boolean>();
   connectedUser = new BehaviorSubject<Auth | null>(null)
+
   constructor(private readonly _httpClient: HttpClient,
               private readonly _router: Router,
               @Inject('urlBackEnd') private readonly _urlBack: string) { }

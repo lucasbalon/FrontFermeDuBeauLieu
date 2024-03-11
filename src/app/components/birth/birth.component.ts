@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {map, Observable, startWith} from "rxjs";
+import {BovineService} from "../../services/bovine.service";
+import {BirthForm} from "../../models/Bovine";
 
 @Component({
   selector: 'app-birth',
@@ -10,10 +12,10 @@ import {map, Observable, startWith} from "rxjs";
 export class BirthComponent {
 
   cowBirthForm: FormGroup;
-  motherLoopNumbers = ['Number 1', 'Number 2', 'Number 3'];
+  motherLoopNumbers = ['1', '2', 'Number 3'];
   filteredMotherLoopNumbers: undefined | Observable<Array<string>>;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private bovineService: BovineService) {
     this.cowBirthForm = this.formBuilder.group({
       loopNumber: ['', Validators.required],
       coat: ['', Validators.required],
@@ -37,7 +39,9 @@ export class BirthComponent {
   }
 
   onSubmit(): void {
-    console.log(this.cowBirthForm.value);
+    let birthForm: BirthForm = this.cowBirthForm.value;
+    this.bovineService.birth(birthForm).subscribe();
+    console.log(birthForm);
   }
 
 }

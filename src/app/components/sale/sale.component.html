@@ -1,23 +1,33 @@
 <form [formGroup]="saleForm" (ngSubmit)="onSubmit()" class="parent">
+
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Sale Date" formControlName="saleDate" type="date">
+    <input type="text" placeholder="Mother Loop Number" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+  </mat-form-field>
+
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
+      {{ loopNumber }}
+    </mat-option>
+  </mat-autocomplete>
+
+  <mat-form-field class="full-width-input">
+    <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="saleDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Amount" formControlName="amount" type="number" min="0">
+    <input matInput placeholder="Amount" formControlName="amount" type="number">
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Carrier Number" formControlName="carrierNumber" type="number" min="0">
+    <input matInput placeholder="Carrier Number" formControlName="carrierNumber" type="number">
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Customer Number" formControlName="customerNumber" type="number" min="0">
+    <input matInput placeholder="Customer Number" formControlName="customerNumber" type="number">
   </mat-form-field>
 
-  <mat-form-field class="full-width-input">
-    <input matInput placeholder="Loop Number" formControlName="loopNumber" required>
-  </mat-form-field>
 
   <button mat-flat-button color="primary" type="submit" [disabled]="!saleForm.valid">
     Submit

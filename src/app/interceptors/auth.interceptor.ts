@@ -3,15 +3,16 @@ import {Injectable} from "@angular/core";
 import {Observable, throwError} from "rxjs";
 import {jwtDecode} from "jwt-decode";
 import {Router} from "@angular/router";
+import {Auth} from "../models/Auth";
+import {AuthService} from "../services/auth.service";
 
 @Injectable()
 export class authInterceptor implements HttpInterceptor {
-  constructor(private readonly _router: Router) {
+  constructor(private readonly _router: Router, private readonly _authService: AuthService) {
   }
 
   //todo: à revoir
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("intercept!");
     if (this._router.url !== 'login') {
       let token = localStorage.getItem('token');
       let currentTime = Date.now() / 1000;
@@ -19,8 +20,7 @@ export class authInterceptor implements HttpInterceptor {
         try {
           let decoded = jwtDecode(token);
           if (decoded.exp && decoded.exp < currentTime) {
-            console.log("Token expired.");
-            this._router.navigate(['login']);
+            this._authService.logout();
             console.error('Token expired'); // Terminate the request
           } else {
             req = req.clone({

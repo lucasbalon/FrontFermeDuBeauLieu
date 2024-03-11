@@ -16,5 +16,5 @@
 
   <mat-checkbox formControlName="isPregnant">Pregnant (check if yes)</mat-checkbox>
 
-  <button mat-raised-button color="primary" type="submit">Submit</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="!ultrasoundForm.valid">Submit</button>
 </form>

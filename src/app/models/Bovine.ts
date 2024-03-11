@@ -1,4 +1,4 @@
-export interface Bovine {
+export interface BirthForm {
   loopNumber: String;
   gender: boolean;
   coat: String;

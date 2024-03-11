@@ -28,6 +28,6 @@
       </mat-option>
     </mat-autocomplete>
 
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!cowBirthForm.valid">Submit</button>
   </form>
 </div>

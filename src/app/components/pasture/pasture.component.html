@@ -1,5 +1,21 @@
+
+<form [formGroup]="pastureForm" (ngSubmit)="onSubmit()" class="parent">
+  <h2>Assigner taureau à la pature: Actuel -> {{bull}}</h2>
+  <mat-form-field class="full-width-input">
+    <input type="text" placeholder="Bull Loop Number" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+  </mat-form-field>
+
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
+      {{ loopNumber }}
+    </mat-option>
+  </mat-autocomplete>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!pastureForm.valid">Submit</button>
+</form>
 <div class="flex-container">
   <div class="example-container">
+
     <h2>Bovins</h2>
 
     <mat-form-field class="example-full-width">
