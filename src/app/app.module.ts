@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +47,10 @@ import {MatExpansionModule, MatExpansionPanel, MatExpansionPanelTitle} from "@an
 import { SaleComponent } from './components/sale/sale.component';
 import {ErrorCatchingInterceptor} from "./interceptors/error-catching.interceptor";
 import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
+import {registerLocaleData} from "@angular/common";
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr, 'fr-BE');
 
 @NgModule({
   declarations: [
@@ -122,6 +126,7 @@ import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
     { provide : "urlBackEnd", useValue : "http://localhost:8080"},
     {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
+    {provide: LOCALE_ID, useValue: "fr-BE"},
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

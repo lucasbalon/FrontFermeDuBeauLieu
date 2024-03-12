@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {FullBovin, Status} from "../../models/Bovine";
+import {BovineService} from "../../services/bovine.service";
 
 @Component({
   selector: 'app-bovin',
@@ -6,28 +9,22 @@ import { Component } from '@angular/core';
   styleUrl: './bovin.component.css'
 })
 export class BovinComponent {
-  cow = {
-    loopNumber: "1234",
-    coat: "Noir",
-    gender: true, // true pour mâle
-    birthDate: new Date(2020, 1, 1),
-    cesarean: false, // false signifie qu'il n'y a pas eu de césarienne
-    status: "Healthy",
-    father: "Bull 1",
-    mother: "Cow 1",
-    pasture: "Pasture 1",
-    saleDate: new Date(2023, 1, 1),
-    amount: 2000.0,
-    carrierNumber: 1234,
-    customerNumber: 5678,
-    children: ["Child 1", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2", "Child 2"],
-    injections: ["Injection 1", "Injection 2"],
-    ultrasounds: ["Ultrasound 1", "Ultrasound 2"]
-  };
+  bovin!: FullBovin;
 
-  constructor() { }
+  //todo: ERROR TypeError: Cannot read properties of undefined (reading 'loopNumber')
 
-  ngOnInit() {
-    // Charger les informations sur le bovin ici
+  constructor(private route: ActivatedRoute, private bovinService: BovineService) {
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      const numericId = Number(id);
+      this.bovinService.getById(numericId).subscribe({
+        next: (value) => {
+          this.bovin = value;
+        }
+      });
+    } else {
+      alert("error");
+    }
   }
+
 }

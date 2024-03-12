@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'pastures', component: PasturesComponent, canActivate: [authGuard]},
   {path: 'pasture', component: PastureComponent, canActivate: [authGuard]},
   {path: 'birth', component: BirthComponent, canActivate: [authGuard]},
-  {path: 'bovin', component: BovinComponent, canActivate: [authGuard]},
+  {path: 'bovin/:id', component: BovinComponent, canActivate: [authGuard]},
   {path: 'injection', component: InjectionComponent, canActivate: [authGuard]},
   {path: 'add-product', component: AddProductComponent, canActivate: [authGuard]},
   {path: 'scan', component: ScanComponent, canActivate: [authGuard]},

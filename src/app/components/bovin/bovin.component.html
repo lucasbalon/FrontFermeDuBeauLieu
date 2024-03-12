@@ -4,34 +4,41 @@
     <mat-card class="mat-elevation-z8 info-card">
       <mat-card-content>
         <h3>Numéro de boucle : </h3>
-        <p>{{ cow.loopNumber }}</p>
+        <p>{{ bovin.loopNumber }}</p>
         <h3>Manteau : </h3>
-        <p>{{ cow.coat }}</p>
+        <p>{{ bovin.coat }}</p>
         <h3>Genre : </h3>
-        <p>{{ cow.gender ? 'Male' : 'Femelle' }}</p>
+        <p>{{ bovin.gender ? 'Male' : 'Femelle' }}</p>
         <h3>Date de naissance : </h3>
-        <p>{{ cow.birthDate }}</p>
+        <p>{{ bovin.birthDate }}</p>
         <h3>Césarienne : </h3>
-        <p>{{ cow.cesarean ? 'Oui' : 'Non' }}</p>
+        <p>{{ bovin.cesarean ? 'Oui' : 'Non' }}</p>
         <h3>Père : </h3>
-        <p>{{ cow.father }}</p>
+        <p>{{ bovin.fatherLoopNumber }}</p>
         <h3>Mère : </h3>
-        <p>{{ cow.mother }}</p>
-        <h3>Pâturage : </h3>
-        <p>{{ cow.pasture }}</p>
+        <p>{{ bovin.motherLoopNumber }}</p>
+        <h3>Pâture : </h3>
+        <p>{{ bovin.pastureName }}</p>
         <h3>Status : </h3>
-        <p>{{ cow.status }}</p>
+        <p>{{ bovin.status }}</p>
         <h2>Vente:</h2>
-        <div class="margin">
-          <h3>Date de vente : </h3>
-          <p>{{ cow.saleDate }}</p>
-          <h3>Montant : </h3>
-          <p>{{ cow.amount }}</p>
-          <h3>Numéro du transporteur : </h3>
-          <p>{{ cow.carrierNumber }}</p>
-          <h3>Numéro du client : </h3>
-          <p>{{ cow.customerNumber }}</p>
-        </div>
+
+        @if(bovin.status.toString() === "ALIVE") {
+          <p>Toujours en vie</p>
+        } @else if (bovin.status.toString() === "DEAD") {
+          <p>Pas d'infos sur la vente (n'a pas été vendue ?)</p>
+        } @else {
+          <div class="margin">
+            <h3>Date de vente : </h3>
+            <p>{{ bovin.saleSaleDate }}</p>
+            <h3>Montant : </h3>
+            <p>{{ bovin.saleAmount }}</p>
+            <h3>Numéro du transporteur : </h3>
+            <p>{{ bovin.saleCarrierNumber }}</p>
+            <h3>Numéro du client : </h3>
+            <p>{{ bovin.saleCustomerNumber }}</p>
+          </div>
+        }
       </mat-card-content>
     </mat-card>
   </div>
@@ -41,29 +48,53 @@
   <div class="lists">
     <mat-card class="list-card">
       <mat-card-title>Enfants</mat-card-title>
-      <mat-card-content class="list-content">
-        <ul>
-          <li *ngFor="let child of cow.children">{{ child }}</li>
-        </ul>
-      </mat-card-content>
+      <mat-table [dataSource]="bovin.children">
+        <ng-container matColumnDef="loopNumber">
+          <mat-header-cell *matHeaderCellDef>Numéro de boucle</mat-header-cell>
+          <mat-cell *matCellDef="let child">{{ child.loopNumber }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="birthDate">
+          <mat-header-cell *matHeaderCellDef>Date de naissance</mat-header-cell>
+          <mat-cell *matCellDef="let child">{{ child.birthDate | date }}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="['birthDate','loopNumber']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['birthDate','loopNumber'];"></mat-row>
+      </mat-table>
     </mat-card>
 
     <mat-card class="list-card">
       <mat-card-title>Injections</mat-card-title>
-      <mat-card-content class="list-content">
-        <ul>
-          <li *ngFor="let injection of cow.injections">{{ injection }}</li>
-        </ul>
-      </mat-card-content>
+      <mat-table [dataSource]="bovin.injections">
+        <ng-container matColumnDef="injectionDate">
+          <mat-header-cell *matHeaderCellDef>Date d'injection</mat-header-cell>
+          <mat-cell *matCellDef="let injections">{{ injections.injectionDate | date}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="injectionSubstance">
+          <mat-header-cell *matHeaderCellDef>Produit</mat-header-cell>
+          <mat-cell *matCellDef="let injections">{{ injections.substance }}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="['injectionDate','injectionSubstance']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['injectionDate', 'injectionSubstance'];"></mat-row>
+      </mat-table>
     </mat-card>
 
-    <mat-card class="list-card">
-      <mat-card-title>Echographies</mat-card-title>
-      <mat-card-content class="list-content">
-        <ul>
-          <li *ngFor="let ultrasound of cow.ultrasounds">{{ ultrasound }}</li>
-        </ul>
-      </mat-card-content>
-    </mat-card>
+    @if(!bovin.gender) {
+      <mat-card class="list-card">
+        <mat-card-title>Echographies</mat-card-title>
+        <mat-table [dataSource]="bovin.scans">
+          <ng-container matColumnDef="scan_date">
+            <mat-header-cell *matHeaderCellDef>Date de l'échographie</mat-header-cell>
+            <mat-cell *matCellDef="let scan">{{ scan.scan_date | date }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="result">
+            <mat-header-cell *matHeaderCellDef>Résultat</mat-header-cell>
+            <mat-cell *matCellDef="let scan">{{ scan.result ? 'positif' : 'négatif' }}</mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="['scan_date', 'result']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: ['scan_date', 'result'];"></mat-row>
+        </mat-table>
+      </mat-card>
+    }
+
   </div>
 </div>

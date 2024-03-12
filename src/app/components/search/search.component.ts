@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 //import {Bovine} from "../../models/Bovine";
 import {map} from "rxjs";
@@ -13,6 +13,7 @@ import {MatSort} from "@angular/material/sort";
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
+  @ViewChild(MatSort) sort: MatSort | null = null;
 
   displayedColumns: string[] = ['loopNumber', 'gender', 'coat', 'birthDate', 'pasture'];
   dataSource!: MatTableDataSource<ReducedBovin>;
@@ -22,10 +23,10 @@ export class SearchComponent {
   constructor(private readonly _router: Router, private readonly _bovineService: BovineService) {
     this._bovineService.getAll().subscribe({
       next: (resp) => {
-        console.log(resp);
         this.bovins = resp;
         this.dataSource = new MatTableDataSource(this.bovins);
         this.noData = this.dataSource.connect().pipe(map(data => data.length === 0));
+        this.dataSource.sort = this.sort;
       }
     });
   }
@@ -36,7 +37,7 @@ export class SearchComponent {
   }
 
   viewDetails(row: ReducedBovin) {
-    this._router.navigate(['/bovin']);
+    this._router.navigate(['/bovin', row.id]);
   }
 
 }

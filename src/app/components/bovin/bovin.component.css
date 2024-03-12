@@ -31,6 +31,9 @@ h3 {
 .margin {
   margin-left: 1rem;
 }
+mat-table {
+  overflow: auto;
+}
 @media(max-width: 1000px) {
   .container {
     flex-direction: column;
@@ -45,3 +48,5 @@ h3 {
     margin: 1rem;
   }
 }
+
+

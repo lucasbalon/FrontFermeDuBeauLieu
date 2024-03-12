@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {BirthForm, ReducedBovin} from "../models/Bovine";
+import {BirthForm, FullBovin, ReducedBovin} from "../models/Bovine";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -21,5 +21,8 @@ export class BovineService {
   }
   getAll(): Observable<ReducedBovin[]> {
     return this._httpClient.get<ReducedBovin[]>(`${this._urlBack}/bovin`);
+  }
+  getById(id: number): Observable<FullBovin> {
+      return this._httpClient.get<FullBovin>(`${this._urlBack}/bovin/id/${id}`);
   }
 }
