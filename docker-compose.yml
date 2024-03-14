@@ -1,0 +1,15 @@
+version: '2.2'
+services:
+  ferme-front:
+    restart: always
+    container_name: ferme-front
+    build: .
+    networks:
+      web:
+    ports:
+      - '80:80'
+    expose:
+      - 80
+networks:
+  web:
+    external: true
