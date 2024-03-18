@@ -21,7 +21,7 @@ const routes: Routes = [
   {path:'home', component: HomeComponent, canActivate: [authGuard]},
   {path: 'search', component: SearchComponent, canActivate: [authGuard]},
   {path: 'pastures', component: PasturesComponent, canActivate: [authGuard]},
-  {path: 'pasture', component: PastureComponent, canActivate: [authGuard]},
+  {path: 'pasture/:id', component: PastureComponent, canActivate: [authGuard]},
   {path: 'birth', component: BirthComponent, canActivate: [authGuard]},
   {path: 'ext-birth', component: ExtBirthComponent, canActivate: [authGuard]},
   {path: 'bovin/:id', component: BovinComponent, canActivate: [authGuard]},

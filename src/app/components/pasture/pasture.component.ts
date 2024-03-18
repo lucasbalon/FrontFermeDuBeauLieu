@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {map, Observable, startWith} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-pasture',
@@ -20,7 +21,8 @@ export class PastureComponent {
   filteredTodo: string[] = this.todo;
   filteredDone: string[] = this.done;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
+    console.log(this.route.snapshot.paramMap.get('id'));
     this.pastureForm = this.formBuilder.group({
       motherLoopNumber: ['', Validators.required]
     });

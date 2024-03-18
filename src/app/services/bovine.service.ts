@@ -19,6 +19,12 @@ export class BovineService {
   loopNumbers(): Observable<string[]> {
     return this._httpClient.get<string[]>(`${this._urlBack}/bovin/loopNumbers`);
   }
+  bullLoopNumbers(): Observable<string[]> {
+    return this._httpClient.get<string[]>(`${this._urlBack}/bovin/loopNumbers/bull`);
+  }
+  cowLoopNumbers(): Observable<string[]> {
+    return this._httpClient.get<string[]>(`${this._urlBack}/bovin/loopNumbers/cow`);
+  }
   getAll(): Observable<ReducedBovin[]> {
     return this._httpClient.get<ReducedBovin[]>(`${this._urlBack}/bovin`);
   }

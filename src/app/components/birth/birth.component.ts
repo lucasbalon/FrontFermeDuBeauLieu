@@ -26,7 +26,7 @@ export class BirthComponent {
       cesarean: ['', Validators.required],
       motherLoopNumber: ['', Validators.required]
     });
-    this.filteredMotherLoopNumbers = this.bovineService.loopNumbers().pipe(
+    this.filteredMotherLoopNumbers = this.bovineService.cowLoopNumbers().pipe(
       switchMap(numbers => {
         this.motherLoopNumbers = numbers;
         return this.cowBirthForm.get('motherLoopNumber')?.valueChanges.pipe(

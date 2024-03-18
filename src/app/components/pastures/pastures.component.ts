@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import {PastureDTO} from "../../models/Pasture";
+import {Router} from "@angular/router";
+import {PastureService} from "../../services/pasture.service";
+import {ReducedBovin} from "../../models/Bovine";
 
 @Component({
   selector: 'app-pastures',
@@ -6,17 +10,18 @@ import { Component } from '@angular/core';
   styleUrl: './pastures.component.css'
 })
 export class PasturesComponent {
-  pastures = [
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 1', size: '10 acres' },
-    { id: 1, name: 'Prairie 2', size: '20 acres' }
-  ];
+  pastures!: PastureDTO[];
+
+  constructor(private readonly router: Router, private readonly pastureService: PastureService) {
+    this.pastureService.getAll().subscribe({
+      next: (resp) => {
+        this.pastures = resp;
+      }
+    });
+  }
+
+  viewDetails(pastureDTO: PastureDTO) {
+    this.router.navigate(['/pasture', pastureDTO.id]);
+  }
 
 }

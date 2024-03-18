@@ -1,7 +1,7 @@
 <!-- Grid for larger screens -->
 <mat-grid-list cols="3" rowHeight="350px" class="lg-screen">
   <mat-grid-tile *ngFor="let pasture of pastures">
-    <a routerLink="/pasture">
+    <a (click)="viewDetails(pasture)">
       <mat-card class="example-card">
         <mat-card-header>
           <div mat-card-avatar></div>
