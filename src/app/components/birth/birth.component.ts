@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {map, Observable, of, startWith, switchMap} from "rxjs";
 import {BovineService} from "../../services/bovine.service";
 import {BirthForm} from "../../models/Bovine";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-birth',
@@ -15,7 +16,7 @@ export class BirthComponent {
   motherLoopNumbers: string[] = [];
   filteredMotherLoopNumbers: undefined | Observable<Array<string>>;
 
-  constructor(private formBuilder: FormBuilder, private bovineService: BovineService) {
+  constructor(private formBuilder: FormBuilder, private bovineService: BovineService, private router: Router) {
 
     this.cowBirthForm = this.formBuilder.group({
       loopNumber: ['', Validators.required],
@@ -45,6 +46,10 @@ export class BirthComponent {
     let birthForm: BirthForm = this.cowBirthForm.value;
     this.bovineService.birth(birthForm).subscribe();
     console.log(birthForm);
+  }
+
+  goToComponent() {
+    this.router.navigate(['ext-birth']);
   }
 
 }

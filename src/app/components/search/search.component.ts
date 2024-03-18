@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 //import {Bovine} from "../../models/Bovine";
-import {map} from "rxjs";
+import {debounceTime, distinctUntilChanged, map, Subject} from "rxjs";
 import {Router} from "@angular/router";
 import {ReducedBovin} from "../../models/Bovine";
 import {BovineService} from "../../services/bovine.service";
@@ -17,23 +17,31 @@ export class SearchComponent {
 
   displayedColumns: string[] = ['loopNumber', 'gender', 'coat', 'birthDate', 'pasture'];
   dataSource!: MatTableDataSource<ReducedBovin>;
-  noData: any;
   bovins!: ReducedBovin[];
+  private searchTerms = new Subject<string>();
 
   constructor(private readonly _router: Router, private readonly _bovineService: BovineService) {
     this._bovineService.getAll().subscribe({
       next: (resp) => {
         this.bovins = resp;
         this.dataSource = new MatTableDataSource(this.bovins);
-        this.noData = this.dataSource.connect().pipe(map(data => data.length === 0));
         this.dataSource.sort = this.sort;
       }
     });
+    this.searchTerms.pipe(
+      debounceTime(300),        // delay execution
+      distinctUntilChanged()    // if next search term is same as previous
+    )
+      .subscribe(searchTerm => {
+        this.dataSource.filter = searchTerm.trim().toLowerCase();
+      });
   }
+
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.searchTerms.next(filterValue.trim());
   }
 
   viewDetails(row: ReducedBovin) {

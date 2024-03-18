@@ -13,6 +13,7 @@ import {authGuard} from "./guards/auth.guard";
 import {PastureComponent} from "./components/pasture/pasture.component";
 import {AddProductComponent} from "./components/add-product/add-product.component";
 import {SaleComponent} from "./components/sale/sale.component";
+import {ExtBirthComponent} from "./components/ext-birth/ext-birth.component";
 
 const routes: Routes = [
   {path:'', redirectTo:'login', pathMatch:'full'},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'pastures', component: PasturesComponent, canActivate: [authGuard]},
   {path: 'pasture', component: PastureComponent, canActivate: [authGuard]},
   {path: 'birth', component: BirthComponent, canActivate: [authGuard]},
+  {path: 'ext-birth', component: ExtBirthComponent, canActivate: [authGuard]},
   {path: 'bovin/:id', component: BovinComponent, canActivate: [authGuard]},
   {path: 'injection', component: InjectionComponent, canActivate: [authGuard]},
   {path: 'add-product', component: AddProductComponent, canActivate: [authGuard]},

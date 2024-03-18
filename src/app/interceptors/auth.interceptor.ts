@@ -11,7 +11,6 @@ export class authInterceptor implements HttpInterceptor {
   constructor(private readonly _router: Router, private readonly _authService: AuthService) {
   }
 
-  //todo: à revoir
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this._router.url !== 'login') {
       let token = localStorage.getItem('token');
@@ -19,10 +18,10 @@ export class authInterceptor implements HttpInterceptor {
       if (token) {
         try {
           let decoded = jwtDecode(token);
-          if (decoded.exp && decoded.exp < currentTime) {
+          if (decoded.exp && decoded.exp < currentTime) { //logout (expiré)
             this._authService.logout();
-            console.error('Token expired'); // Terminate the request
-          } else {
+            console.error('Token expired');
+          } else { //OK
             req = req.clone({
               setHeaders: {
                 Authorization: localStorage.getItem('token')!

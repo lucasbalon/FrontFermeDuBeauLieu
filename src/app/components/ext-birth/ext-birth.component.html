@@ -1,6 +1,8 @@
 <div>
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
   <form [formGroup]="cowBirthForm" (ngSubmit)="onSubmit()" class="parent">
-    <button class="ext" mat-raised-button color="primary" (click)="goToComponent()">Ajout extérieur</button>
     <mat-form-field class="full-width-input">
       <input matInput placeholder="Loop Number" formControlName="loopNumber">
     </mat-form-field>
@@ -16,18 +18,6 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-
-    <mat-checkbox formControlName="cesarean">Césarienne (cocher si oui)</mat-checkbox>
-
-    <mat-form-field class="full-width-input">
-      <input type="text" placeholder="Mother Loop Number" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
-    </mat-form-field>
-
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
-        {{ loopNumber }}
-      </mat-option>
-    </mat-autocomplete>
 
     <button mat-raised-button color="primary" type="submit" [disabled]="!cowBirthForm.valid">Submit</button>
   </form>

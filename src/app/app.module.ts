@@ -49,6 +49,7 @@ import {ErrorCatchingInterceptor} from "./interceptors/error-catching.intercepto
 import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
 import {registerLocaleData} from "@angular/common";
 import localeFr from '@angular/common/locales/fr';
+import { ExtBirthComponent } from './components/ext-birth/ext-birth.component';
 
 registerLocaleData(localeFr, 'fr-BE');
 
@@ -69,7 +70,8 @@ registerLocaleData(localeFr, 'fr-BE');
     BovinComponent,
     PastureComponent,
     AddProductComponent,
-    SaleComponent
+    SaleComponent,
+    ExtBirthComponent
   ],
   imports: [
     //Angular Material
