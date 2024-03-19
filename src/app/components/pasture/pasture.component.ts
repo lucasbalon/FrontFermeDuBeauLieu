@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import {map, Observable, startWith} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {BovinShortDTO} from "../../models/Pasture";
+import {PastureService} from "../../services/pasture.service";
+import {BovineService} from "../../services/bovine.service";
 
 @Component({
   selector: 'app-pasture',
@@ -10,47 +13,72 @@ import {ActivatedRoute} from "@angular/router";
   styleUrl: './pasture.component.css'
 })
 export class PastureComponent {
-  bull = '6473';
+  pastureName!: string;
+  bull!: string;
   pastureForm: FormGroup;
-  motherLoopNumbers = ['Number 1', 'Number 2', 'Number 3'];
-  filteredMotherLoopNumbers: undefined | Observable<Array<string>>;
-  todo = ['Vache 1', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4', 'Vache 2', 'Vache 3', 'Vache 4'];
+  bullsLoopNumbers!: string[];
+  filteredBullsLoopNumbers: undefined | Observable<Array<string>>;
+  cowsAvailable!: BovinShortDTO[];
+  cowsInPature!: BovinShortDTO[];
 
-  done = ['Vache 5', 'Vache 6', 'Vache 7', 'Vache 8', 'Vache 9'];
+  numericId!: number;
 
-  filteredTodo: string[] = this.todo;
-  filteredDone: string[] = this.done;
+  filteredAvailableCows!: BovinShortDTO[];
+  filteredCowsInPasture!: BovinShortDTO[];
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
-    console.log(this.route.snapshot.paramMap.get('id'));
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private pastureService: PastureService, private bovinService: BovineService, private router: Router) {
     this.pastureForm = this.formBuilder.group({
       motherLoopNumber: ['', Validators.required]
     });
-    this.filteredMotherLoopNumbers = this.pastureForm.get('motherLoopNumber')?.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
+
+    this.bovinService.getAvailableBulls().subscribe({
+      next: (value) => {
+        this.bullsLoopNumbers = value.map(bovin => bovin.loopNumber);
+        this.filteredBullsLoopNumbers = this.pastureForm.get('motherLoopNumber')?.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );
+      }
+    });
+
+
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+       this.numericId = Number(id);
+      this.pastureService.getById(this.numericId).subscribe({
+        next: (value) => {
+          this.bull = value.actualBull;
+          this.cowsAvailable = value.availableCows;
+          this.cowsInPature = value.pastureCows;
+          this.pastureName = value.name;
+          this.filteredAvailableCows = this.cowsAvailable;
+          this.filteredCowsInPasture = this.cowsInPature;
+        }
+      });
+    } else {
+      alert("error");
+    }
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.motherLoopNumbers.filter(option => option.toLowerCase().includes(filterValue));
+    return this.bullsLoopNumbers.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   onSearchChange(event: Event, list: 'todo' | 'done'): void {
     let searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
 
     if (list === 'todo') {
-      this.filteredTodo = this.todo.filter(item => item.toLowerCase().includes(searchTerm));
+      this.filteredAvailableCows = this.cowsAvailable.filter(item => item.loopNumber.toLowerCase().includes(searchTerm));
     } else if (list === 'done') {
-      this.filteredDone = this.done.filter(item => item.toLowerCase().includes(searchTerm));
+      this.filteredCowsInPasture = this.cowsInPature.filter(item => item.loopNumber.toLowerCase().includes(searchTerm));
     }
   }
 
   //todo: filtrer avec la recherche par numero, et appeler l'alerte consanguinité ici.
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<BovinShortDTO[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -63,6 +91,16 @@ export class PastureComponent {
     }
   }
   onSubmit(): void {
-    console.log(this.pastureForm.value);
+    const selectedOption = this.pastureForm.get('motherLoopNumber')!.value;
+    console.log("Selected Option: ", selectedOption);
+
+    this.pastureService.assignBull(this.numericId, selectedOption).subscribe({
+      next: (value) => {
+        // handle success
+      },
+      error: (error) => {
+        // handle error
+      }
+    });
   }
 }

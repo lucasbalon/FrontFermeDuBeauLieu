@@ -6,7 +6,7 @@
   </mat-form-field>
 
   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-    <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
+    <mat-option *ngFor="let loopNumber of filteredBullsLoopNumbers | async" [value]="loopNumber">
       {{ loopNumber }}
     </mat-option>
   </mat-autocomplete>
@@ -25,18 +25,18 @@
     <div
       cdkDropList
       #todoList="cdkDropList"
-      [cdkDropListData]="filteredTodo"
+      [cdkDropListData]="filteredAvailableCows"
       [cdkDropListConnectedTo]="[doneList]"
       class="example-list"
       (cdkDropListDropped)="drop($event)">
-      @for (item of todo; track item) {
-        <div class="example-box" cdkDrag>{{item}}</div>
+      @for (item of filteredAvailableCows; track item) {
+        <div class="example-box" cdkDrag>{{item.loopNumber}}</div>
       }
     </div>
   </div>
 
   <div class="example-container">
-    <h2>Pature 1</h2>
+    <h2>{{ pastureName }}</h2>
 
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Rechercher" (input)="onSearchChange($event, 'done')">
@@ -45,12 +45,12 @@
     <div
       cdkDropList
       #doneList="cdkDropList"
-      [cdkDropListData]="filteredDone"
+      [cdkDropListData]="filteredCowsInPasture"
       [cdkDropListConnectedTo]="[todoList]"
       class="example-list"
       (cdkDropListDropped)="drop($event)">
-      @for (item of done; track item) {
-        <div class="example-box" cdkDrag>{{item}}</div>
+      @for (item of filteredCowsInPasture; track item) {
+        <div class="example-box" cdkDrag>{{item.loopNumber}}</div>
       }
     </div>
   </div>
