@@ -4,6 +4,11 @@ export interface PastureDTO {
   size: number;
 }
 
+export interface PasturePostDTO {
+  name: string;
+  size: number;
+}
+
 export interface BovinShortDTO {
   id: number;
   loopNumber: string;

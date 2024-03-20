@@ -50,6 +50,7 @@ import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
 import {registerLocaleData} from "@angular/common";
 import localeFr from '@angular/common/locales/fr';
 import { ExtBirthComponent } from './components/ext-birth/ext-birth.component';
+import { AddPastureComponent } from './components/add-pasture/add-pasture.component';
 
 registerLocaleData(localeFr, 'fr-BE');
 
@@ -71,7 +72,8 @@ registerLocaleData(localeFr, 'fr-BE');
     PastureComponent,
     AddProductComponent,
     SaleComponent,
-    ExtBirthComponent
+    ExtBirthComponent,
+    AddPastureComponent
   ],
   imports: [
     //Angular Material

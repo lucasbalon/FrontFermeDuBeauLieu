@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {PastureDTO, PastureFullDTO} from "../models/Pasture";
+import {PastureDTO, PastureFullDTO, PasturePostDTO} from "../models/Pasture";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,9 @@ export class PastureService {
               private readonly _router: Router,
               @Inject('urlBackEnd') private readonly _urlBack: string) { }
 
+  create(pastureDTO: PasturePostDTO): Observable<any> {
+    return this._httpClient.post(`${this._urlBack}/pasture`, pastureDTO);
+  }
   getAll(): Observable<PastureDTO[]> {
     return this._httpClient.get<PastureDTO[]>(`${this._urlBack}/pasture`);
   }

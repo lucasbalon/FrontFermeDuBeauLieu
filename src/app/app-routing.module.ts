@@ -14,6 +14,7 @@ import {PastureComponent} from "./components/pasture/pasture.component";
 import {AddProductComponent} from "./components/add-product/add-product.component";
 import {SaleComponent} from "./components/sale/sale.component";
 import {ExtBirthComponent} from "./components/ext-birth/ext-birth.component";
+import {AddPastureComponent} from "./components/add-pasture/add-pasture.component";
 
 const routes: Routes = [
   {path:'', redirectTo:'login', pathMatch:'full'},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'search', component: SearchComponent, canActivate: [authGuard]},
   {path: 'pastures', component: PasturesComponent, canActivate: [authGuard]},
   {path: 'pasture/:id', component: PastureComponent, canActivate: [authGuard]},
+  {path: 'add-pasture', component: AddPastureComponent, canActivate: [authGuard]},
   {path: 'birth', component: BirthComponent, canActivate: [authGuard]},
   {path: 'ext-birth', component: ExtBirthComponent, canActivate: [authGuard]},
   {path: 'bovin/:id', component: BovinComponent, canActivate: [authGuard]},

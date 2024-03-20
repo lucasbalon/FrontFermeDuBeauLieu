@@ -1,0 +1,11 @@
+<form [formGroup]="pastureForm" class="parent" (ngSubmit)="onSubmit()">
+  <mat-form-field class="example-full-width full-width-input">
+    <input type="text" placeholder="Nom" matInput formControlName="name" >
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width full-width-input">
+    <input type="number" placeholder="Taille" matInput formControlName="size" >
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!pastureForm.valid">Submit</button>
+</form>
