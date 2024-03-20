@@ -21,6 +21,9 @@ export class PastureService {
   updatePasture(pastureId: number, cowLoopnumber: string): Observable<any> {
     return this._httpClient.patch(`${this._urlBack}/bovin/cow/${cowLoopnumber}/pasture`, pastureId);
   }
+  removeFromPasture(cowLoopnumber: string): Observable<any> {
+    return this._httpClient.delete(`${this._urlBack}/bovin/cow/${cowLoopnumber}`);
+  }
   assignBull(pastureId: number, bullLoopnumber: string): Observable<any> {
     return this._httpClient.patch(`${this._urlBack}/bovin/bull/${bullLoopnumber}/pasture`, pastureId);
   }

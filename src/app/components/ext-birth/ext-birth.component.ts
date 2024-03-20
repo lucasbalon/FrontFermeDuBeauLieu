@@ -27,7 +27,7 @@ export class ExtBirthComponent {
   onSubmit(): void {
     let birthForm: BirthForm = this.cowBirthForm.value;
     // Make sure to update your BirthForm model to reflect the form changes
-    this.bovineService.birth(birthForm).subscribe();
+    this.bovineService.extbirth(birthForm).subscribe();
     console.log(birthForm);
   }
 

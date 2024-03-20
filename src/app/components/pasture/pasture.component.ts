@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {map, Observable, startWith} from "rxjs";
+import {catchError, map, Observable, startWith, throwError} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BovinShortDTO} from "../../models/Pasture";
@@ -76,31 +76,71 @@ export class PastureComponent {
     }
   }
 
-  //todo: filtrer avec la recherche par numero, et appeler l'alerte consanguinité ici.
-
-  drop(event: CdkDragDrop<BovinShortDTO[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-  }
   onSubmit(): void {
     const selectedOption = this.pastureForm.get('motherLoopNumber')!.value;
     console.log("Selected Option: ", selectedOption);
 
     this.pastureService.assignBull(this.numericId, selectedOption).subscribe({
       next: (value) => {
-        // handle success
+        this.reloadLists()
       },
       error: (error) => {
         // handle error
       }
     });
   }
+
+
+  drop(event: CdkDragDrop<BovinShortDTO[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      let item = event.previousContainer.data[event.previousIndex]; // copy the item
+      event.previousContainer.data.splice(event.previousIndex, 1); // remove the item manually
+
+      if (event.container.id === 'available') {
+        this.pastureService.removeFromPasture(item.loopNumber).subscribe({
+          next: (response) => {
+            event.container.data.push(item); // add the item manually
+            this.reloadLists();
+          },
+          error: (error) => {
+            // handle error
+            console.error(error);
+            event.previousContainer.data.splice(event.previousIndex, 0, item); // add back the item if error occurs
+          }
+        });
+      } else if (event.container.id === 'pasture') {
+        this.pastureService.updatePasture(this.numericId, item.loopNumber).subscribe({
+          next: (response) => {
+            event.container.data.push(item); // add the item manually
+            this.reloadLists();
+          },
+          error: (error) => {
+            // handle error
+            console.error(error);
+            event.previousContainer.data.splice(event.previousIndex, 0, item); // add back the item if error occurs
+          }
+        });
+      }
+    }
+  }
+
+  reloadLists() {
+    this.pastureService.getById(this.numericId).subscribe({
+      next: (value) => {
+        this.bull = value.actualBull;
+        this.cowsAvailable = value.availableCows;
+        this.cowsInPature = value.pastureCows;
+        this.pastureName = value.name;
+        this.filteredAvailableCows = this.cowsAvailable;
+        this.filteredCowsInPasture = this.cowsInPature;
+      },
+      error: (error) => {
+        // handle error
+        console.error(error);
+      }
+    })
+  }
+
 }

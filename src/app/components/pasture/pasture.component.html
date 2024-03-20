@@ -23,6 +23,7 @@
     </mat-form-field>
 
     <div
+      id="available"
       cdkDropList
       #todoList="cdkDropList"
       [cdkDropListData]="filteredAvailableCows"
@@ -43,6 +44,7 @@
     </mat-form-field>
 
     <div
+      id="pasture"
       cdkDropList
       #doneList="cdkDropList"
       [cdkDropListData]="filteredCowsInPasture"

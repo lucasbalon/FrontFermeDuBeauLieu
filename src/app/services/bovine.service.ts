@@ -17,6 +17,9 @@ export class BovineService {
   birth(birthForm: BirthForm): Observable<any> {
     return this._httpClient.post(`${this._urlBack}/bovin`, birthForm);
   }
+  extbirth(birthForm: BirthForm): Observable<any> {
+    return this._httpClient.post(`${this._urlBack}/bovin/short`, birthForm);
+  }
   loopNumbers(): Observable<string[]> {
     return this._httpClient.get<string[]>(`${this._urlBack}/bovin/loopNumbers`);
   }
