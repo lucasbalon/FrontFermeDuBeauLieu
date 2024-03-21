@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {Location} from "@angular/common";
+import {SubstanceService} from "../../services/substance.service";
+import {SubstanceForm} from "../../models/Substance";
 
 @Component({
   selector: 'app-add-product',
@@ -9,14 +11,16 @@ import {Location} from "@angular/common";
 })
 export class AddProductComponent {
   productForm = this.fb.group({
-    product: ['', Validators.required]
+    name: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private location: Location) {}
+  constructor(private fb: FormBuilder, private location: Location, private substanceService: SubstanceService) {
+
+  }
 
   onSubmit() {
-    // Handle form submission here
-    console.log(this.productForm.value);
+    let substanceForm: SubstanceForm = this.productForm.value;
+    this.substanceService.create(substanceForm).subscribe();
   }
 
   goBack() {

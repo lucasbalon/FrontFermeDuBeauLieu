@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
+import {map, Observable, of, startWith, switchMap} from "rxjs";
 import {Router} from "@angular/router";
+import {InjectionService} from "../../services/injection.service";
+import {BovineService} from "../../services/bovine.service";
+import {InjectionForm} from "../../models/Injection";
+import {SubstanceService} from "../../services/substance.service";
+import {SubstanceForm} from "../../models/Substance";
 
 @Component({
   selector: 'app-injection',
@@ -11,20 +16,30 @@ import {Router} from "@angular/router";
 export class InjectionComponent {
   injectionForm = this.fb.group({
     injectionDate: [new Date(), Validators.required],
-    product: ['', Validators.required],
-    cowLoopNumber: ['', Validators.required]
+    substanceName: ['', Validators.required],
+    bovinLoopNumber: ['', Validators.required]
   });
 
   cowLoopNumbers: string[] = ['123', '456', '789']; // Remplacer cette liste par vos numéros de boucle de vache réels
-  products: string[] = ['Product 1', 'Product 2', 'Product 3']; // Remplacer cette liste par vos produits réels
+  products: SubstanceForm[] = [];
   filteredCowLoopNumbers: Observable<string[]>;
 
-  constructor(private fb: FormBuilder, private readonly _router: Router) {
-    this.filteredCowLoopNumbers = this.injectionForm.get('cowLoopNumber')!.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this.filter(value || ''))
-      );
+  constructor(private fb: FormBuilder, private readonly _router: Router, private injectionService: InjectionService, private bovineService: BovineService, private substanceService: SubstanceService) {
+    this.filteredCowLoopNumbers = this.bovineService.cowLoopNumbers().pipe(
+      switchMap(numbers => {
+        this.cowLoopNumbers = numbers;
+        return this.injectionForm.get('bovinLoopNumber')?.valueChanges.pipe(
+          startWith(''),
+          map(value => this.filter(value!))
+        ) ?? of([]);
+      })
+    );
+    this.substanceService.getAll().subscribe({
+      next: (resp) => {
+        //todo: faire en sorte que products ne récupère pas des objets, mais juste des string
+        this.products = resp;
+      }
+    });
   }
 
   filter(value: string): string[] {
@@ -33,8 +48,12 @@ export class InjectionComponent {
   }
 
   onSubmit() {
-    // Handle form submission here
-    console.log(this.injectionForm.value);
+    let form: InjectionForm = {
+      bovinLoopNumber: <string>this.injectionForm.get('bovinLoopNumber')?.value,
+      injectionDate: <Date>this.injectionForm.get('injectionDate')?.value,
+      substanceName: <string>this.injectionForm.get('substanceName')?.value,
+    };
+    this.injectionService.create(form).subscribe();
   }
 
   addProduct() {
