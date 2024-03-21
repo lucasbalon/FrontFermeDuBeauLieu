@@ -1,12 +1,12 @@
 <form [formGroup]="ultrasoundForm" class="parent" (ngSubmit)="onSubmit()">
   <mat-form-field class="example-full-width full-width-input">
-    <input matInput [matDatepicker]="dp1" placeholder="Scan Date" formControlName="scanDate">
+    <input matInput [matDatepicker]="dp1" placeholder="Scan Date" formControlName="scan_date">
     <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
     <mat-datepicker #dp1></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field class="example-full-width full-width-input">
-    <input type="text" placeholder="Mother Loop Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+    <input type="text" placeholder="Mother Loop Number" matInput formControlName="loopNumber" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
       <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
         {{ loopNumber }}
@@ -14,7 +14,7 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-checkbox formControlName="isPregnant">Pregnant (check if yes)</mat-checkbox>
+  <mat-checkbox formControlName="result">Pregnant (check if yes)</mat-checkbox>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="!ultrasoundForm.valid">Submit</button>
 </form>

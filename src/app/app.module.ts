@@ -39,7 +39,7 @@ import { PastureComponent } from './components/pasture/pasture.component';
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
-import {MatNativeDateModule, MatOption} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatNativeDateModule, MatOption} from "@angular/material/core";
 import {MatSelect} from "@angular/material/select";
 import {MatAutocomplete, MatAutocompleteModule} from "@angular/material/autocomplete";
 import { AddProductComponent } from './components/add-product/add-product.component';
@@ -131,6 +131,8 @@ registerLocaleData(localeFr, 'fr-BE');
     {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     {provide: LOCALE_ID, useValue: "fr-BE"},
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
+
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
+import {map, Observable, of, startWith, switchMap} from "rxjs";
+import {ScanService} from "../../services/scan.service";
+import {ScanForm} from "../../models/Scan";
+import {BovineService} from "../../services/bovine.service";
 
 @Component({
   selector: 'app-scan',
@@ -9,28 +12,33 @@ import {map, Observable, startWith} from "rxjs";
 })
 export class ScanComponent {
   ultrasoundForm = this.fb.group({
-    scanDate: [new Date(), Validators.required],
-    motherLoopNumber: ['', Validators.required],
-    isPregnant: [false]
+    scan_date: [new Date(), Validators.required],
+    result: [false, Validators.required],
+    loopNumber: ['', Validators.required]
   });
 
-  motherLoopNumbers: string[] = ['123', '456', '789']; // Remplacer cette liste par vos numéros réels
-  filteredMotherLoopNumbers: Observable<string[]>;
+  motherLoopNumbers: string[] = [];
+  filteredMotherLoopNumbers: undefined | Observable<Array<string>>;
 
-  constructor(private fb: FormBuilder) {
-    this.filteredMotherLoopNumbers = this.ultrasoundForm.get('motherLoopNumber')!.valueChanges.pipe(
-      startWith(''),
-      map((value: string | null) => this.filter(value || ''))
+  constructor(private fb: FormBuilder, private scanService: ScanService, private bovineService: BovineService) {
+    this.filteredMotherLoopNumbers = this.bovineService.cowLoopNumbers().pipe(
+      switchMap(numbers => {
+        this.motherLoopNumbers = numbers;
+        return this.ultrasoundForm.get('loopNumber')?.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value!))
+        ) ?? of([]);
+      })
     );
   }
 
-  filter(value: string): string[] {
+  private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.motherLoopNumbers.filter(loopNumber => loopNumber.toLowerCase().includes(filterValue));
+    return this.motherLoopNumbers.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   onSubmit() {
-    // Handle form submission here
-    console.log(this.ultrasoundForm.value);
+    const scanForm: ScanForm = this.ultrasoundForm.value;
+    this.scanService.create(scanForm).subscribe();
   }
 }

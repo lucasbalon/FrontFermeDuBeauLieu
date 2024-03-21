@@ -21,9 +21,9 @@ export class BirthComponent {
     this.cowBirthForm = this.formBuilder.group({
       loopNumber: ['', Validators.required],
       coat: ['', Validators.required],
-      gender: ['', Validators.required],
+      gender: [false, Validators.required],
       birthDate: [new Date(), Validators.required],
-      cesarean: ['', Validators.required],
+      cesarean: [false, Validators.required],
       motherLoopNumber: ['', Validators.required]
     });
     this.filteredMotherLoopNumbers = this.bovineService.cowLoopNumbers().pipe(
@@ -45,7 +45,6 @@ export class BirthComponent {
   onSubmit(): void {
     let birthForm: BirthForm = this.cowBirthForm.value;
     this.bovineService.birth(birthForm).subscribe();
-    console.log(birthForm);
   }
 
   goToComponent() {
