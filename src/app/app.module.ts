@@ -134,7 +134,7 @@ registerLocaleData(localeFr, 'fr-BE');
 
   ],
   providers: [
-    { provide : "urlBackEnd", useValue : 'http://mellier.ddns.net:8080'},
+    { provide : "urlBackEnd", useValue : 'http://192.168.0.23:8080'},
     {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     {provide: LOCALE_ID, useValue: "fr-BE"},
