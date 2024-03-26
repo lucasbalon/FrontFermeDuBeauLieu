@@ -51,6 +51,8 @@ import {registerLocaleData} from "@angular/common";
 import localeFr from '@angular/common/locales/fr';
 import { ExtBirthComponent } from './components/ext-birth/ext-birth.component';
 import { AddPastureComponent } from './components/add-pasture/add-pasture.component';
+import {MatSidenav, MatSidenavContainer, MatSidenavModule} from "@angular/material/sidenav";
+import {MatList, MatListItem} from "@angular/material/list";
 
 registerLocaleData(localeFr, 'fr-BE');
 
@@ -123,11 +125,16 @@ registerLocaleData(localeFr, 'fr-BE');
     MatSortHeader,
     MatSort,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatSidenavContainer,
+    MatList,
+    MatListItem,
+    MatSidenav,
+    MatSidenavModule
 
   ],
   providers: [
-    { provide : "urlBackEnd", useValue : "http://localhost:8080"},
+    { provide : "urlBackEnd", useValue : 'http://mellier.ddns.net:8080'},
     {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorCatchingInterceptor, multi: true},
     {provide: LOCALE_ID, useValue: "fr-BE"},

@@ -5,11 +5,11 @@ services:
     container_name: ferme-front
     build: .
     networks:
-      web:
+      ferme:
     ports:
       - '80:80'
     expose:
       - 80
 networks:
-  web:
+  ferme:
     external: true

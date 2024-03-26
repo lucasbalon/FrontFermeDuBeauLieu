@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
+import {map, Observable, of, startWith, switchMap} from "rxjs";
+import {SaleService} from "../../services/sale.service";
+import {BovineService} from "../../services/bovine.service";
+import {SaleForm} from "../../models/Sale";
 
 @Component({
   selector: 'app-sale',
@@ -9,36 +12,35 @@ import {map, Observable, startWith} from "rxjs";
 })
 export class SaleComponent {
   saleForm!: FormGroup;
-  filteredMotherLoopNumbers: undefined | Observable<Array<string>>;
-  motherLoopNumbers = ['Number 1', 'Number 2', 'Number 3'];
+  filteredLoopNumbers: undefined | Observable<Array<string>>;
+  loopNumbers: string[] = [];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private saleService: SaleService, private bovinService: BovineService) {
     this.saleForm = this.formBuilder.group({
-      motherLoopNumber: ['', Validators.required],
+      bovinLoopNumber: ['', Validators.required],
       saleDate: [new Date(), Validators.required],
       amount: ['', [Validators.required, Validators.min(0)]],
       carrierNumber: ['', [Validators.required, Validators.min(0)]],
       customerNumber: ['', [Validators.required, Validators.min(0)]]
     });
-    this.filteredMotherLoopNumbers = this.saleForm.get('motherLoopNumber')?.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
-  }
-
-  ngOnInit() {
-
+    this.filteredLoopNumbers = this.bovinService.loopNumbers().pipe(
+      switchMap(numbers => {
+        this.loopNumbers = numbers;
+        return this.saleForm.get('bovinLoopNumber')?.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        ) ?? of([]);
+      })
+    );
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.motherLoopNumbers.filter(option => option.toLowerCase().includes(filterValue));
+    return this.loopNumbers.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   onSubmit() {
-    if (this.saleForm.valid) {
-      console.log(this.saleForm.value);
-    }
+    let saleForm: SaleForm = this.saleForm.value;
+    this.saleService.create(saleForm).subscribe();
   }
 }

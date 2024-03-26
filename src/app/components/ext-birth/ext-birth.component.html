@@ -1,14 +1,18 @@
+<mat-toolbar color="primary" class="center">
+  <span>Ajout d'un bovin extérieur</span>
+</mat-toolbar>
+
 <div>
   <button mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
   <form [formGroup]="cowBirthForm" (ngSubmit)="onSubmit()" class="parent">
     <mat-form-field class="full-width-input">
-      <input matInput placeholder="Loop Number" formControlName="loopNumber">
+      <input matInput placeholder="Numéro de boucle" formControlName="loopNumber">
     </mat-form-field>
 
     <mat-form-field class="full-width-input">
-      <input matInput placeholder="Coat" formControlName="coat">
+      <input matInput placeholder="Robe" formControlName="coat">
     </mat-form-field>
 
     <mat-checkbox formControlName="gender">Genre (cocher si male)</mat-checkbox>
@@ -19,6 +23,6 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="!cowBirthForm.valid">Submit</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!cowBirthForm.valid">Envoyer</button>
   </form>
 </div>

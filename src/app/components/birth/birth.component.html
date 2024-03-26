@@ -1,12 +1,16 @@
+<mat-toolbar color="primary" class="center">
+  <span>Ajout de naissance de vache</span>
+</mat-toolbar>
+
 <div>
   <form [formGroup]="cowBirthForm" (ngSubmit)="onSubmit()" class="parent">
     <button class="ext" mat-raised-button color="primary" (click)="goToComponent()">Ajout extérieur</button>
     <mat-form-field class="full-width-input">
-      <input matInput placeholder="Loop Number" formControlName="loopNumber">
+      <input matInput placeholder="Numéro de boucle" formControlName="loopNumber">
     </mat-form-field>
 
     <mat-form-field class="full-width-input">
-      <input matInput placeholder="Coat" formControlName="coat">
+      <input matInput placeholder="Robe" formControlName="coat">
     </mat-form-field>
 
     <mat-checkbox formControlName="gender">Genre (cocher si male)</mat-checkbox>
@@ -20,7 +24,7 @@
     <mat-checkbox formControlName="cesarean">Césarienne (cocher si oui)</mat-checkbox>
 
     <mat-form-field class="full-width-input">
-      <input type="text" placeholder="Mother Loop Number" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+      <input type="text" placeholder="Numéro de boucle de la mère" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
     </mat-form-field>
 
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -29,6 +33,6 @@
       </mat-option>
     </mat-autocomplete>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="!cowBirthForm.valid">Submit</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!cowBirthForm.valid">Envoyer</button>
   </form>
 </div>

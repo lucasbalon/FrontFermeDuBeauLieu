@@ -1,9 +1,13 @@
+<mat-toolbar color="primary" class="center">
+  <span>Ajout d'une injection</span>
+</mat-toolbar>
+
 <form [formGroup]="injectionForm" class="parent" (ngSubmit)="onSubmit()">
 
-  <button class="product-button" mat-raised-button color="primary" type="button" (click)="addProduct()">Add Product</button>
+  <button class="product-button" mat-raised-button color="primary" type="button" (click)="addProduct()">Ajouter un produit</button>
 
   <mat-form-field class="example-full-width full-width-input">
-    <mat-select placeholder="Product" formControlName="substanceName">
+    <mat-select placeholder="Produit" formControlName="substanceName">
       <mat-option *ngFor="let product of products" [value]="product.name">{{product.name}}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -15,7 +19,7 @@
   </mat-form-field>
 
   <mat-form-field class="example-full-width full-width-input">
-    <input type="text" placeholder="Cow Loop Number" matInput formControlName="bovinLoopNumber" [matAutocomplete]="auto">
+    <input type="text" placeholder="Numéro de boucle" matInput formControlName="bovinLoopNumber" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
       <mat-option *ngFor="let loopNumber of filteredCowLoopNumbers | async" [value]="loopNumber">
         {{ loopNumber }}
@@ -23,5 +27,5 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!injectionForm.valid">Submit</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="!injectionForm.valid">Envoyer</button>
 </form>

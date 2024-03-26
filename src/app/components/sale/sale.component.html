@@ -1,11 +1,15 @@
+<mat-toolbar color="primary" class="center">
+  <span>Ajout d'une vente</span>
+</mat-toolbar>
+
 <form [formGroup]="saleForm" (ngSubmit)="onSubmit()" class="parent">
 
   <mat-form-field class="full-width-input">
-    <input type="text" placeholder="Mother Loop Number" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+    <input type="text" placeholder="Numéro de boucle" aria-label="Number" matInput formControlName="bovinLoopNumber" [matAutocomplete]="auto">
   </mat-form-field>
 
   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-    <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
+    <mat-option *ngFor="let loopNumber of filteredLoopNumbers | async" [value]="loopNumber">
       {{ loopNumber }}
     </mat-option>
   </mat-autocomplete>
@@ -17,19 +21,19 @@
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Amount" formControlName="amount" type="number">
+    <input matInput placeholder="Prix de vente" formControlName="amount" type="number">
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Carrier Number" formControlName="carrierNumber" type="number">
+    <input matInput placeholder="Numéro de transporteur" formControlName="carrierNumber" type="number">
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Customer Number" formControlName="customerNumber" type="number">
+    <input matInput placeholder="Numéro de client" formControlName="customerNumber" type="number">
   </mat-form-field>
 
 
   <button mat-flat-button color="primary" type="submit" [disabled]="!saleForm.valid">
-    Submit
+    Envoyer
   </button>
 </form>

@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {BirthForm, FullBovin, ReducedBovin} from "../models/Bovine";
+import {BirthForm, FullBovin, ReducedBovin, Status} from "../models/Bovine";
 import {Observable} from "rxjs";
 import {BovinShortDTO} from "../models/Pasture";
 
@@ -37,5 +37,8 @@ export class BovineService {
   }
   getAvailableBulls(): Observable<BovinShortDTO[]> {
     return this._httpClient.get<BovinShortDTO[]>(`${this._urlBack}/bovin/bull/available`);
+  }
+  getByStatus(status : String): Observable<ReducedBovin[]> {
+    return this._httpClient.get<ReducedBovin[]>(`${this._urlBack}/bovin/status/${status}`);
   }
 }
