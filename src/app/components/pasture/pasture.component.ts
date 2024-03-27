@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BovinShortDTO} from "../../models/Pasture";
 import {PastureService} from "../../services/pasture.service";
 import {BovineService} from "../../services/bovine.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-pasture',
@@ -22,26 +23,17 @@ export class PastureComponent {
   cowsInPature!: BovinShortDTO[];
 
   numericId!: number;
+  isSubmitting = false;
 
   filteredAvailableCows!: BovinShortDTO[];
   filteredCowsInPasture!: BovinShortDTO[];
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private pastureService: PastureService, private bovinService: BovineService, private router: Router) {
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private pastureService: PastureService, private bovinService: BovineService, private router: Router, private snackBar: MatSnackBar) {
     this.pastureForm = this.formBuilder.group({
       motherLoopNumber: ['', Validators.required]
     });
 
-    this.bovinService.getAvailableBulls().subscribe({
-      next: (value) => {
-        this.bullsLoopNumbers = value.map(bovin => bovin.loopNumber);
-        this.filteredBullsLoopNumbers = this.pastureForm.get('motherLoopNumber')?.valueChanges
-          .pipe(
-            startWith(''),
-            map(value => this._filter(value))
-          );
-      }
-    });
-
+    this.getAvailableBulls();
 
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -61,6 +53,19 @@ export class PastureComponent {
     }
   }
 
+  getAvailableBulls(): void {
+    this.bovinService.getAvailableBulls().subscribe({
+      next: (value) => {
+        this.bullsLoopNumbers = value.map(bovin => bovin.loopNumber);
+        this.filteredBullsLoopNumbers = this.pastureForm.get('motherLoopNumber')?.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );
+      }
+    });
+  }
+
   onSearchChange(event: Event, list: 'todo' | 'done'): void {
     let searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
 
@@ -73,13 +78,19 @@ export class PastureComponent {
 
   onSubmit(): void {
     const selectedOption = this.pastureForm.get('motherLoopNumber')!.value;
+    this.isSubmitting = true;
 
     this.pastureService.assignBull(this.numericId, selectedOption).subscribe({
       next: (value) => {
         this.reloadLists()
+        this.clearForm();
+        this.openSuccessSnackbar();
+        this.getAvailableBulls();
+        this.isSubmitting = false;
       },
       error: (error) => {
         // handle error
+        this.isSubmitting = false;
       }
     });
   }
@@ -139,6 +150,17 @@ export class PastureComponent {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.bullsLoopNumbers.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  clearForm() {
+    this.pastureForm.reset();
+  }
+
+  openSuccessSnackbar() {
+    this.snackBar.open('Taureau ajouté avec succès', 'Fermer', {
+      duration: 6000,
+      verticalPosition: "top"
+    });
   }
 
 }

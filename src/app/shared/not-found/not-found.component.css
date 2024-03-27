@@ -6,6 +6,9 @@ body {
 .container {
   max-width: 500px;
   margin: auto;
+
+  padding-top: 2rem;
+  padding-bottom: 10rem;
 }
 
 img {

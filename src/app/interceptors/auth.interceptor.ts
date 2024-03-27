@@ -29,7 +29,7 @@ export class authInterceptor implements HttpInterceptor {
           }
         } catch (err) {
           console.error('Invalid token', err);
-          return throwError(err); // Terminate the request
+          return throwError(() => err); // Terminate the request
         }
       }
     }

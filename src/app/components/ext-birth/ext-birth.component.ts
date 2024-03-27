@@ -21,7 +21,7 @@ export class ExtBirthComponent {
     this.cowBirthForm = this.formBuilder.group({
       loopNumber: ['', Validators.required],
       coat: ['', Validators.required],
-      gender: ['', Validators.required],
+      gender: [false, Validators.required],
       birthDate: [new Date(), Validators.required],
     });
   }

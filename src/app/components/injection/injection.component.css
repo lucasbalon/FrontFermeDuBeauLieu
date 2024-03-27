@@ -5,6 +5,8 @@
   height: 70vh;
   width: 100%;
   flex-direction: column;
+  padding-top: 2rem;
+  padding-bottom: 10rem;
 }
 
 .center-form {

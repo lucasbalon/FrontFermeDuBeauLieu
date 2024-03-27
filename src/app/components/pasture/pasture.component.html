@@ -1,7 +1,7 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="pastureForm" class="parent">
   <h2>Assigner taureau à la pature: Actuel -> {{ bull }}</h2>
   <mat-form-field class="full-width-input">
-    <input [matAutocomplete]="auto" aria-label="Number" formControlName="motherLoopNumber" matInput placeholder="Bull Loop Number"
+    <input [matAutocomplete]="auto" aria-label="Number" formControlName="motherLoopNumber" matInput placeholder="Numéro du taureau"
            type="text">
   </mat-form-field>
 
@@ -11,7 +11,10 @@
     </mat-option>
   </mat-autocomplete>
 
-  <button [disabled]="!pastureForm.valid" color="primary" mat-raised-button type="submit">Submit</button>
+  <button [disabled]="isSubmitting || !pastureForm.valid" color="primary" mat-raised-button type="submit">
+    <span *ngIf="!isSubmitting">Envoyer</span>
+    <span *ngIf="isSubmitting">Envoi en cours...</span>
+  </button>
 </form>
 <div class="flex-container">
   <div class="example-container">
