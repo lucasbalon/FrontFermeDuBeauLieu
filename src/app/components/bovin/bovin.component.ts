@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FullBovin, Status} from "../../models/Bovine";
+import {Component} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {FullBovin} from "../../models/Bovine";
 import {BovineService} from "../../services/bovine.service";
 
 @Component({

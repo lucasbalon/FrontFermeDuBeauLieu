@@ -1,28 +1,31 @@
-<mat-toolbar color="primary" class="center">
+<mat-toolbar class="center" color="primary">
   <span>Ajout d'un bovin extérieur</span>
 </mat-toolbar>
 
 <div>
-  <button mat-icon-button (click)="goBack()">
+  <button (click)="goBack()" mat-icon-button>
     <mat-icon>arrow_back</mat-icon>
   </button>
-  <form [formGroup]="cowBirthForm" (ngSubmit)="onSubmit()" class="parent">
+  <form (ngSubmit)="onSubmit()" [formGroup]="cowBirthForm" class="parent">
     <mat-form-field class="full-width-input">
-      <input matInput placeholder="Numéro de boucle" formControlName="loopNumber">
+      <input formControlName="loopNumber" matInput placeholder="Numéro de boucle">
     </mat-form-field>
 
     <mat-form-field class="full-width-input">
-      <input matInput placeholder="Robe" formControlName="coat">
+      <input formControlName="coat" matInput placeholder="Robe">
     </mat-form-field>
 
     <mat-checkbox formControlName="gender">Genre (cocher si male)</mat-checkbox>
 
     <mat-form-field class="full-width-input">
-      <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birthDate">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <input [matDatepicker]="picker" formControlName="birthDate" matInput placeholder="Birth Date">
+      <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="!cowBirthForm.valid">Envoyer</button>
+    <button [disabled]="isSubmitting || !cowBirthForm.valid" color="primary" mat-raised-button type="submit">
+      <span *ngIf="!isSubmitting">Envoyer</span>
+      <span *ngIf="isSubmitting">Envoi en cours...</span>
+    </button>
   </form>
 </div>

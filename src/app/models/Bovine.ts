@@ -38,14 +38,17 @@ interface Child {
   loopNumber: string;
   birthDate: Date;
 }
+
 interface Scan {
   scan_date: Date;
   result: boolean;
 }
+
 interface Injection {
   injectionDate: Date;
   substance: string;
 }
+
 export enum Status {
   DEAD,
   SOLD,

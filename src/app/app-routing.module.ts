@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {NotFoundComponent} from "./shared/not-found/not-found.component";
 import {LoginComponent} from "./components/login/login.component";
 import {HomeComponent} from "./components/home/home.component";
@@ -17,9 +17,9 @@ import {ExtBirthComponent} from "./components/ext-birth/ext-birth.component";
 import {AddPastureComponent} from "./components/add-pasture/add-pasture.component";
 
 const routes: Routes = [
-  {path:'', redirectTo:'login', pathMatch:'full'},
-  {path:'login', component: LoginComponent},
-  {path:'home', component: HomeComponent, canActivate: [authGuard]},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
+  {path: 'home', component: HomeComponent, canActivate: [authGuard]},
   {path: 'search', component: SearchComponent, canActivate: [authGuard]},
   {path: 'pastures', component: PasturesComponent, canActivate: [authGuard]},
   {path: 'pasture/:id', component: PastureComponent, canActivate: [authGuard]},
@@ -31,12 +31,13 @@ const routes: Routes = [
   {path: 'add-product', component: AddProductComponent, canActivate: [authGuard]},
   {path: 'scan', component: ScanComponent, canActivate: [authGuard]},
   {path: 'sale', component: SaleComponent, canActivate: [authGuard]},
-  {path:'404', component: NotFoundComponent},
-  {path:'**', redirectTo:'404'}
+  {path: '404', component: NotFoundComponent},
+  {path: '**', redirectTo: '404'}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,16 +1,17 @@
-<mat-toolbar color="primary" class="center">
+<mat-toolbar class="center" color="primary">
   <span>Ajout d'une échographie</span>
 </mat-toolbar>
 
-<form [formGroup]="ultrasoundForm" class="parent" (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="ultrasoundForm" class="parent">
   <mat-form-field class="example-full-width full-width-input">
-    <input matInput [matDatepicker]="dp1" placeholder="Scan Date" formControlName="scan_date">
-    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+    <input [matDatepicker]="dp1" formControlName="scan_date" matInput placeholder="Scan Date">
+    <mat-datepicker-toggle [for]="dp1" matSuffix></mat-datepicker-toggle>
     <mat-datepicker #dp1></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field class="example-full-width full-width-input">
-    <input type="text" placeholder="Numéro de boucle de la mère" matInput formControlName="loopNumber" [matAutocomplete]="auto">
+    <input [matAutocomplete]="auto" formControlName="loopNumber" matInput placeholder="Numéro de boucle de la mère"
+           type="text">
     <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
       <mat-option *ngFor="let loopNumber of filteredMotherLoopNumbers | async" [value]="loopNumber">
         {{ loopNumber }}
@@ -20,5 +21,8 @@
 
   <mat-checkbox formControlName="result">Positif (cocher si oui)</mat-checkbox>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!ultrasoundForm.valid">Envoyer</button>
+  <button [disabled]="isSubmitting || !ultrasoundForm.valid" color="primary" mat-raised-button type="submit">
+    <span *ngIf="!isSubmitting">Envoyer</span>
+    <span *ngIf="isSubmitting">Envoi en cours...</span>
+  </button>
 </form>

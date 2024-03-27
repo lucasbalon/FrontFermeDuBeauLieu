@@ -4,17 +4,21 @@
   margin: 2rem;
   padding-bottom: 5rem;
 }
+
 h3 {
   font-weight: bold;
   margin: 0;
 }
+
 .lists {
   width: 50%;
   height: 100%;
 }
+
 .list-card {
   height: 30%;
 }
+
 .info {
   width: 50%;
   height: 100%;
@@ -28,21 +32,26 @@ h3 {
 .list-content {
   overflow: auto;
 }
+
 .margin {
   margin-left: 1rem;
 }
+
 mat-table {
   overflow: auto;
 }
-@media(max-width: 1000px) {
+
+@media (max-width: 1000px) {
   .container {
     flex-direction: column;
     margin: 2rem 0 0 0;
   }
+
   .lists, .info {
     width: 100%;
     height: auto;
   }
+
   .info-card, .list-card {
     padding: 1rem;
     margin: 1rem;

@@ -1,15 +1,18 @@
-<mat-toolbar color="primary" class="center">
+<mat-toolbar class="center" color="primary">
   <span>Ajout d'un produit</span>
 </mat-toolbar>
 
-<button mat-icon-button (click)="goBack()">
+<button (click)="goBack()" mat-icon-button>
   <mat-icon>arrow_back</mat-icon>
 </button>
 
-<form [formGroup]="productForm" class="parent" (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="productForm" class="parent">
   <mat-form-field class="example-full-width full-width-input">
-    <input type="text" matInput placeholder="Nom" formControlName="name">
+    <input formControlName="name" matInput placeholder="Nom" type="text">
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Envoyer</button>
+  <button [disabled]="isSubmitting || !productForm.valid" color="primary" mat-raised-button type="submit">
+    <span *ngIf="!isSubmitting">Envoyer</span>
+    <span *ngIf="isSubmitting">Envoi en cours...</span>
+  </button>
 </form>

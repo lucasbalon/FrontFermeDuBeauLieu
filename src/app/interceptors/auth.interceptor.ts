@@ -3,7 +3,6 @@ import {Injectable} from "@angular/core";
 import {Observable, throwError} from "rxjs";
 import {jwtDecode} from "jwt-decode";
 import {Router} from "@angular/router";
-import {Auth} from "../models/Auth";
 import {AuthService} from "../services/auth.service";
 
 @Injectable()

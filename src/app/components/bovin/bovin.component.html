@@ -23,7 +23,7 @@
         <p>{{ bovin.status }}</p>
         <h2>Vente:</h2>
 
-        @if(bovin.status.toString() === "ALIVE") {
+        @if (bovin.status.toString() === "ALIVE") {
           <p>Toujours en vie</p>
         } @else if (bovin.status.toString() === "DEAD") {
           <p>Pas d'infos sur la vente (n'a pas été vendue ?)</p>
@@ -42,7 +42,6 @@
       </mat-card-content>
     </mat-card>
   </div>
-
 
 
   <div class="lists">
@@ -67,7 +66,7 @@
       <mat-table [dataSource]="bovin.injections">
         <ng-container matColumnDef="injectionDate">
           <mat-header-cell *matHeaderCellDef>Date d'injection</mat-header-cell>
-          <mat-cell *matCellDef="let injections">{{ injections.injectionDate | date}}</mat-cell>
+          <mat-cell *matCellDef="let injections">{{ injections.injectionDate | date }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="injectionSubstance">
           <mat-header-cell *matHeaderCellDef>Produit</mat-header-cell>
@@ -78,7 +77,7 @@
       </mat-table>
     </mat-card>
 
-    @if(!bovin.gender) {
+    @if (!bovin.gender) {
       <mat-card class="list-card">
         <mat-card-title>Echographies</mat-card-title>
         <mat-table [dataSource]="bovin.scans">

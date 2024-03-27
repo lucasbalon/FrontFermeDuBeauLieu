@@ -1,39 +1,41 @@
-<mat-toolbar color="primary" class="center">
+<mat-toolbar class="center" color="primary">
   <span>Ajout d'une vente</span>
 </mat-toolbar>
 
-<form [formGroup]="saleForm" (ngSubmit)="onSubmit()" class="parent">
+<form (ngSubmit)="onSubmit()" [formGroup]="saleForm" class="parent">
 
   <mat-form-field class="full-width-input">
-    <input type="text" placeholder="Numéro de boucle" aria-label="Number" matInput formControlName="bovinLoopNumber" [matAutocomplete]="auto">
+    <input [matAutocomplete]="auto" aria-label="Number" formControlName="bovinLoopNumber" matInput placeholder="Numéro de boucle"
+           type="text">
   </mat-form-field>
 
-  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+  <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
     <mat-option *ngFor="let loopNumber of filteredLoopNumbers | async" [value]="loopNumber">
       {{ loopNumber }}
     </mat-option>
   </mat-autocomplete>
 
   <mat-form-field class="full-width-input">
-    <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="saleDate">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <input [matDatepicker]="picker" formControlName="saleDate" matInput placeholder="Birth Date">
+    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Prix de vente" formControlName="amount" type="number">
+    <input formControlName="amount" matInput placeholder="Prix de vente" type="number">
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Numéro de transporteur" formControlName="carrierNumber" type="number">
+    <input formControlName="carrierNumber" matInput placeholder="Numéro de transporteur" type="number">
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput placeholder="Numéro de client" formControlName="customerNumber" type="number">
+    <input formControlName="customerNumber" matInput placeholder="Numéro de client" type="number">
   </mat-form-field>
 
 
-  <button mat-flat-button color="primary" type="submit" [disabled]="!saleForm.valid">
-    Envoyer
+  <button [disabled]="isSubmitting || !saleForm.valid" color="primary" mat-raised-button type="submit">
+    <span *ngIf="!isSubmitting">Envoyer</span>
+    <span *ngIf="isSubmitting">Envoi en cours...</span>
   </button>
 </form>

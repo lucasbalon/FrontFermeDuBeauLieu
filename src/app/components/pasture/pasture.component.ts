@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {catchError, map, Observable, startWith, throwError} from "rxjs";
+import {Component} from '@angular/core';
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {map, Observable, startWith} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BovinShortDTO} from "../../models/Pasture";
@@ -45,7 +45,7 @@ export class PastureComponent {
 
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
-       this.numericId = Number(id);
+      this.numericId = Number(id);
       this.pastureService.getById(this.numericId).subscribe({
         next: (value) => {
           this.bull = value.actualBull;
@@ -61,11 +61,6 @@ export class PastureComponent {
     }
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.bullsLoopNumbers.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
   onSearchChange(event: Event, list: 'todo' | 'done'): void {
     let searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
 
@@ -78,7 +73,6 @@ export class PastureComponent {
 
   onSubmit(): void {
     const selectedOption = this.pastureForm.get('motherLoopNumber')!.value;
-    console.log("Selected Option: ", selectedOption);
 
     this.pastureService.assignBull(this.numericId, selectedOption).subscribe({
       next: (value) => {
@@ -89,7 +83,6 @@ export class PastureComponent {
       }
     });
   }
-
 
   drop(event: CdkDragDrop<BovinShortDTO[]>) {
     if (event.previousContainer === event.container) {
@@ -141,6 +134,11 @@ export class PastureComponent {
         console.error(error);
       }
     })
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.bullsLoopNumbers.filter(option => option.toLowerCase().includes(filterValue));
   }
 
 }

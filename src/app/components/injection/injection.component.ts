@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-import {map, Observable, of, startWith, switchMap} from "rxjs";
+import {Observable, of} from "rxjs";
+import {map, startWith, switchMap} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {InjectionService} from "../../services/injection.service";
 import {BovineService} from "../../services/bovine.service";
 import {InjectionForm} from "../../models/Injection";
@@ -11,7 +13,7 @@ import {SubstanceForm} from "../../models/Substance";
 @Component({
   selector: 'app-injection',
   templateUrl: './injection.component.html',
-  styleUrl: './injection.component.css'
+  styleUrls: ['./injection.component.css']
 })
 export class InjectionComponent {
   injectionForm = this.fb.group({
@@ -20,12 +22,23 @@ export class InjectionComponent {
     bovinLoopNumber: ['', Validators.required]
   });
 
-  cowLoopNumbers: string[] = ['123', '456', '789']; // Remplacer cette liste par vos numéros de boucle de vache réels
+  cowLoopNumbers: string[] = [];
   products: SubstanceForm[] = [];
-  filteredCowLoopNumbers: Observable<string[]>;
+  filteredCowLoopNumbers: Observable<string[]> | undefined;
+  isSubmitting = false;
 
-  constructor(private fb: FormBuilder, private readonly _router: Router, private injectionService: InjectionService, private bovineService: BovineService, private substanceService: SubstanceService) {
-    this.filteredCowLoopNumbers = this.bovineService.cowLoopNumbers().pipe(
+  constructor(private fb: FormBuilder, private readonly _router: Router, private injectionService: InjectionService,
+              private bovineService: BovineService, private substanceService: SubstanceService, private snackBar: MatSnackBar) {
+    this.initLists();
+  }
+
+  filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.cowLoopNumbers.filter(loopNumber => loopNumber.toLowerCase().includes(filterValue));
+  }
+
+  initLists(): void {
+    this.filteredCowLoopNumbers = this.bovineService.loopNumbers().pipe(
       switchMap(numbers => {
         this.cowLoopNumbers = numbers;
         return this.injectionForm.get('bovinLoopNumber')?.valueChanges.pipe(
@@ -36,15 +49,9 @@ export class InjectionComponent {
     );
     this.substanceService.getAll().subscribe({
       next: (resp) => {
-        //todo: faire en sorte que products ne récupère pas des objets, mais juste des string
         this.products = resp;
       }
     });
-  }
-
-  filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.cowLoopNumbers.filter(loopNumber => loopNumber.toLowerCase().includes(filterValue));
   }
 
   onSubmit() {
@@ -53,7 +60,32 @@ export class InjectionComponent {
       injectionDate: <Date>this.injectionForm.get('injectionDate')?.value,
       substanceName: <string>this.injectionForm.get('substanceName')?.value,
     };
-    this.injectionService.create(form).subscribe();
+    if (this.injectionForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      this.injectionService.create(form).subscribe(
+        () => {
+          this.isSubmitting = false;
+          this.openSuccessSnackbar();
+          this.clearForm();
+        },
+        error => {
+          console.error('Error submitting form:', error);
+          this.isSubmitting = false;
+        }
+      );
+    }
+  }
+
+  clearForm() {
+    this.injectionForm.reset();
+    this.initLists();
+  }
+
+  openSuccessSnackbar() {
+    this.snackBar.open('Injection créée avec succès', 'Fermer', {
+      duration: 6000,
+      verticalPosition: "top"
+    });
   }
 
   addProduct() {

@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {PastureDTO} from "../../models/Pasture";
 import {Router} from "@angular/router";
 import {PastureService} from "../../services/pasture.service";
-import {ReducedBovin} from "../../models/Bovine";
 
 @Component({
   selector: 'app-pastures',

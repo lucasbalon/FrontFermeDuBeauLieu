@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {BehaviorSubject, Subject, tap} from "rxjs";
+import {BehaviorSubject, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Auth} from "../models/Auth";
@@ -9,24 +9,21 @@ import {Auth} from "../models/Auth";
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   connectedUser = new BehaviorSubject<Auth | null>(null)
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private readonly _httpClient: HttpClient,
               private readonly _router: Router,
-              @Inject('urlBackEnd') private readonly _urlBack: string) { }
+              @Inject('urlBackEnd') private readonly _urlBack: string) {
+  }
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
 
-  private hasToken(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
   login(auth: Auth) {
     return this._httpClient.post<Auth>(`${this._urlBack}/user/login`, auth).pipe(
-      tap( value => {
+      tap(value => {
         localStorage.setItem('token', value.token);
         localStorage.setItem('login', value.login);
         this.connectedUser.next(value);
@@ -43,6 +40,10 @@ export class AuthService {
     this.connectedUser.next(null);
     this.loggedIn.next(false);
     this._router.navigate(['login']);
+  }
+
+  private hasToken(): boolean {
+    return !!localStorage.getItem('token');
   }
 
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from "./services/auth.service";
 
 @Component({
@@ -7,6 +7,8 @@ import {AuthService} from "./services/auth.service";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'FrontFermeDuBeauLieu';
-  constructor(protected readonly _authService: AuthService) {}
+  title = 'Ferme Oger';
+
+  constructor(protected readonly _authService: AuthService) {
+  }
 }

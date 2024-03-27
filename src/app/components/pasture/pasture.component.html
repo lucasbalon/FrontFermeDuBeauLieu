@@ -1,17 +1,17 @@
-
-<form [formGroup]="pastureForm" (ngSubmit)="onSubmit()" class="parent">
-  <h2>Assigner taureau à la pature: Actuel -> {{bull}}</h2>
+<form (ngSubmit)="onSubmit()" [formGroup]="pastureForm" class="parent">
+  <h2>Assigner taureau à la pature: Actuel -> {{ bull }}</h2>
   <mat-form-field class="full-width-input">
-    <input type="text" placeholder="Bull Loop Number" aria-label="Number" matInput formControlName="motherLoopNumber" [matAutocomplete]="auto">
+    <input [matAutocomplete]="auto" aria-label="Number" formControlName="motherLoopNumber" matInput placeholder="Bull Loop Number"
+           type="text">
   </mat-form-field>
 
-  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+  <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
     <mat-option *ngFor="let loopNumber of filteredBullsLoopNumbers | async" [value]="loopNumber">
       {{ loopNumber }}
     </mat-option>
   </mat-autocomplete>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!pastureForm.valid">Submit</button>
+  <button [disabled]="!pastureForm.valid" color="primary" mat-raised-button type="submit">Submit</button>
 </form>
 <div class="flex-container">
   <div class="example-container">
@@ -19,19 +19,19 @@
     <h2>Bovins</h2>
 
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Rechercher" (input)="onSearchChange($event, 'todo')">
+      <input (input)="onSearchChange($event, 'todo')" matInput placeholder="Rechercher">
     </mat-form-field>
 
     <div
-      id="available"
-      cdkDropList
       #todoList="cdkDropList"
-      [cdkDropListData]="filteredAvailableCows"
+      (cdkDropListDropped)="drop($event)"
       [cdkDropListConnectedTo]="[doneList]"
+      [cdkDropListData]="filteredAvailableCows"
+      cdkDropList
       class="example-list"
-      (cdkDropListDropped)="drop($event)">
+      id="available">
       @for (item of filteredAvailableCows; track item) {
-        <div class="example-box" cdkDrag>{{item.loopNumber}}</div>
+        <div class="example-box" cdkDrag>{{ item.loopNumber }}</div>
       }
     </div>
   </div>
@@ -40,19 +40,19 @@
     <h2>{{ pastureName }}</h2>
 
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Rechercher" (input)="onSearchChange($event, 'done')">
+      <input (input)="onSearchChange($event, 'done')" matInput placeholder="Rechercher">
     </mat-form-field>
 
     <div
-      id="pasture"
-      cdkDropList
       #doneList="cdkDropList"
-      [cdkDropListData]="filteredCowsInPasture"
+      (cdkDropListDropped)="drop($event)"
       [cdkDropListConnectedTo]="[todoList]"
+      [cdkDropListData]="filteredCowsInPasture"
+      cdkDropList
       class="example-list"
-      (cdkDropListDropped)="drop($event)">
+      id="pasture">
       @for (item of filteredCowsInPasture; track item) {
-        <div class="example-box" cdkDrag>{{item.loopNumber}}</div>
+        <div class="example-box" cdkDrag>{{ item.loopNumber }}</div>
       }
     </div>
   </div>

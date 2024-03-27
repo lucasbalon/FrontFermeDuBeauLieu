@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 //import {Bovine} from "../../models/Bovine";
 import {debounceTime, distinctUntilChanged, Subject} from "rxjs";
 import {Router} from "@angular/router";
-import {ReducedBovin, Status} from "../../models/Bovine";
+import {ReducedBovin} from "../../models/Bovine";
 import {BovineService} from "../../services/bovine.service";
 import {MatSort} from "@angular/material/sort";
 

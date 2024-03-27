@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {LOGIN_FORM} from "../../models/Auth";
 import {Router} from "@angular/router";
@@ -24,6 +24,7 @@ export class LoginComponent {
       this._router.navigate(['search']);
     }
   }
+
   login() {
     if (this.loginForm.valid) {
       this._authService.login(this.loginForm.value).subscribe({

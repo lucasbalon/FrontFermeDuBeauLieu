@@ -1,15 +1,17 @@
-<mat-toolbar color="primary" class="center">
+<mat-toolbar class="center" color="primary">
   <span>Ajout d'une pature</span>
 </mat-toolbar>
 
-<form [formGroup]="pastureForm" class="parent" (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="pastureForm" class="parent">
   <mat-form-field class="example-full-width full-width-input">
-    <input type="text" placeholder="Nom" matInput formControlName="name" >
+    <input formControlName="name" matInput placeholder="Nom" type="text">
   </mat-form-field>
 
   <mat-form-field class="example-full-width full-width-input">
-    <input type="number" placeholder="Taille" matInput formControlName="size" >
+    <input formControlName="size" matInput placeholder="Taille" type="number">
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!pastureForm.valid">Submit</button>
+  <button [disabled]="isSubmitting || !pastureForm.valid" color="primary" mat-raised-button type="submit">
+    {{ isSubmitting ? 'Envoi en cours...' : 'Envoyer' }}
+  </button>
 </form>

@@ -1,6 +1,7 @@
 .width_large {
   width: 100%;
 }
+
 .mat-mdc-row:hover {
   background-color: darkgrey;
   cursor: pointer;

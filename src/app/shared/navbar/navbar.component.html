@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <a mat-button routerLink="/search">Recherche</a>
   <a mat-button routerLink="/pastures">Patures</a>
-  <button mat-button [matMenuTriggerFor]="encodeMenu">Encoder</button>
+  <button [matMenuTriggerFor]="encodeMenu" mat-button>Encoder</button>
   <mat-menu #encodeMenu="matMenu">
     <button mat-menu-item routerLink="/birth">Naissance</button>
     <button mat-menu-item routerLink="/add-pasture">Pature</button>
@@ -10,7 +10,7 @@
     <button mat-menu-item routerLink="/sale">Vente</button>
   </mat-menu>
   <span class="spacer"></span>
-  <button mat-icon-button (click)="_authService.logout()">
+  <button (click)="_authService.logout()" mat-icon-button>
     <mat-icon class="logout-icon">exit_to_app</mat-icon>
   </button>
 </mat-toolbar>
